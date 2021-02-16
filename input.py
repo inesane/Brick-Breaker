@@ -41,7 +41,7 @@ def alarmHandler(signum, frame):
 #         signal.signal(signal.SIGALRM, signal.SIG_IGN)
 #         return None
 
-def input_to(getch, timeout=0.1):
+def input_to(getch, timeout=0.03):
     """Taking input from user."""
     signal.signal(signal.SIGALRM, alarmHandler)
     signal.setitimer(signal.ITIMER_REAL, timeout)
