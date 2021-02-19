@@ -16,6 +16,10 @@ ball_char = 'O'
 brick_length = 4
 no_of_bricks = 5
 lives = 3
+left_border = '⎹'
+right_border = '⎸'
+bottom_border = '‾'
+top_border = '_'
 
 
 class Ball:
@@ -62,61 +66,50 @@ class Ball:
                 self.x_vel = -1*((self.x - Paddle.x) - (int)(Paddle.length/2))
             else:
                 self.x_vel = -1*(Paddle.x + (int)(Paddle.length/2) - self.x)
-        elif((arr[self.y+1][self.x+self.x_vel] == paddle_char) and (self.y_vel == -1)):
-            if(self.x+self.x_vel>columns):
-                return
-            self.y_vel = 1
-            self.y = rows - 1
-            self.x += self.x_vel
-            if(Paddle.length % 2 == 0):
-                self.x_vel = -1*((self.x - Paddle.x) - (int)(Paddle.length/2))
-            else:
-                self.x_vel = -1*(Paddle.x + (int)(Paddle.length/2) - self.x)
+        elif(self.x + self.x_vel < columns + 1):
+            if((arr[self.y+1][self.x+self.x_vel] == paddle_char) and (self.y_vel == -1)):
+                if(self.x+self.x_vel > columns):
+                    return
+                self.y_vel = 1
+                self.y = rows - 1
+                self.x += self.x_vel
+                if(Paddle.length % 2 == 0):
+                    self.x_vel = -1*((self.x - Paddle.x) - (int)(Paddle.length/2))
+                else:
+                    self.x_vel = -1*(Paddle.x + (int)(Paddle.length/2) - self.x)
 
     def brick_collision(self, arr, Brick_arr):
         if(self.y > rows or self.y < 1 or self.x < 1 or self.x > columns):
             return
-        if((arr[self.y][self.x+1] == '0' or arr[self.y][self.x+1] == '1' or arr[self.y][self.x+1] == '2' or arr[self.y][self.x+1] == '3' or arr[self.y][self.x+1] == '4') and (self.x_vel > 0)):
+        if((arr[self.y][self.x+1] != ' ') and (arr[self.y][self.x+1] != paddle_char) and (arr[self.y][self.x+1] != left_border) and (arr[self.y][self.x+1] != right_border) and (arr[self.y][self.x+1] != bottom_border) and (arr[self.y][self.x+1] != top_border) and (self.x_vel > 0)):
             curr = int(arr[self.y][self.x+1])
             self.x_vel *= -1
             self.x = Brick_arr[curr].x - 1
-            if (Brick_arr[curr].strength > 0):
-                if(Brick_arr[curr].strength == 1):
-                    config.score += 10
-                    # rand = np.random.randint(1,10)
-                    # if(rand%3 == 0):
-                    #     PowerUp(Brick_arr[curr].x, Brick_arr[curr].y, arr)
-                Brick_arr[curr].strength -= 1
-        elif((arr[self.y][self.x-1] == '0' or arr[self.y][self.x-1] == '1' or arr[self.y][self.x-1] == '2' or arr[self.y][self.x-1] == '3' or arr[self.y][self.x-1] == '4') and (self.x_vel < 0)):
+            Brick_arr[curr].collision(arr, Brick_arr)
+            # rand = np.random.randint(1,4)
+            # if(rand%3 == 0):
+            #     PowerUp(Brick_arr[curr].x, Brick_arr[curr].y, arr)
+        elif((arr[self.y][self.x-1] != ' ') and (arr[self.y][self.x-1] != paddle_char) and (arr[self.y][self.x-1] != left_border) and (arr[self.y][self.x-1] != right_border) and (arr[self.y][self.x-1] != bottom_border) and (arr[self.y][self.x-1] != top_border) and (self.x_vel < 0)):
             curr = int(arr[self.y][self.x-1])
             self.x_vel *= -1
             self.x = Brick_arr[curr].x + brick_length
-            if (Brick_arr[curr].strength > 0):
-                if(Brick_arr[curr].strength == 1):
-                    config.score += 10
-                    # rand = np.random.randint(1,10)
-                    # if(rand%3 == 0):
-                    #     PowerUp(Brick_arr[curr].x, Brick_arr[curr].y, arr)
-                Brick_arr[curr].strength -= 1
-        elif((arr[self.y+1][self.x] == '0' or arr[self.y+1][self.x] == '1' or arr[self.y+1][self.x] == '2' or arr[self.y+1][self.x] == '3' or arr[self.y+1][self.x] == '4') and (self.y_vel == -1)):
+            Brick_arr[curr].collision(arr, Brick_arr)
+            # rand = np.random.randint(1,4)
+            # if(rand%3 == 0):
+            #     PowerUp(Brick_arr[curr].x, Brick_arr[curr].y)
+        elif((arr[self.y+1][self.x] != ' ') and (arr[self.y+1][self.x] != paddle_char) and (arr[self.y+1][self.x] != left_border) and (arr[self.y+1][self.x] != right_border) and (arr[self.y+1][self.x] != bottom_border) and (arr[self.y+1][self.x] != top_border) and (self.y_vel < 0)):
             curr = int(arr[self.y+1][self.x])
             self.y_vel = 1
             self.y = Brick_arr[curr].y - 1
-            if (Brick_arr[curr].strength > 0):
-                if(Brick_arr[curr].strength == 1):
-                    config.score += 10
-                    # rand = np.random.randint(1,10)
-                    # if(rand%3 == 0):
-                    #     PowerUp(Brick_arr[curr].x, Brick_arr[curr].y, arr)
-                Brick_arr[curr].strength -= 1
-        elif((arr[self.y-1][self.x] == '0' or arr[self.y-1][self.x] == '1' or arr[self.y-1][self.x] == '2' or arr[self.y-1][self.x] == '3' or arr[self.y-1][self.x] == '4') and (self.y_vel == 1)):
+            Brick_arr[curr].collision(arr, Brick_arr)
+            # rand = np.random.randint(1,4)
+            # if(rand%3 == 0):
+            #     PowerUp(Brick_arr[curr].x, Brick_arr[curr].y, arr)
+        elif((arr[self.y-1][self.x] != ' ') and (arr[self.y-1][self.x] != paddle_char) and (arr[self.y-1][self.x] != left_border) and (arr[self.y-1][self.x] != right_border) and (arr[self.y-1][self.x] != bottom_border) and (arr[self.y-1][self.x] != top_border) and (self.y_vel > 0)):
             curr = int(arr[self.y-1][self.x])
             self.y_vel = -1
             self.y = Brick_arr[curr].y + brick_length
-            if (Brick_arr[curr].strength > 0):
-                if(Brick_arr[curr].strength == 1):
-                    config.score += 10
-                    # rand = np.random.randint(1,10)
-                    # if(rand%3 == 0):
-                    #     PowerUp(Brick_arr[curr].x, Brick_arr[curr].y, arr)
-                Brick_arr[curr].strength -= 1
+            Brick_arr[curr].collision(arr, Brick_arr)
+            # rand = np.random.randint(1,4)
+            # if(rand%3 == 0):
+            #     PowerUp(Brick_arr[curr].x, Brick_arr[curr].y, arr)

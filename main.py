@@ -5,7 +5,7 @@ import numpy as np
 from time import sleep
 from colorama import Back, Fore, Style
 from paddles import Paddle
-from bricks import Brick
+from bricks import Unbreakable, Breakable, Exploding
 from balls import Ball
 import time
 import config
@@ -16,15 +16,24 @@ columns = 80
 paddle_char = '='
 ball_char = 'O'
 brick_length = 4
-no_of_bricks = 5
+no_of_breakable_bricks = 6
+no_of_unbreakable_bricks = 2
+no_of_exploding_bricks = 4
 lives = 3
 ball_speed = 3
 initial_time = time.time()
+left_border = '⎹'
+right_border = '⎸'
+bottom_border = '‾'
+top_border = '_'
 
 system("stty -echo")
-brick_arr = [0]*no_of_bricks
-for i in range(no_of_bricks):
-    brick_arr[i] = Brick(str(i))
+brick_arr = [0]*(no_of_breakable_bricks+no_of_unbreakable_bricks + no_of_exploding_bricks)
+for i in range(no_of_breakable_bricks):
+    brick_arr[i] = Breakable(str(i))
+
+# brick_arr[0].x = 3
+# brick_arr[0].y = 7
 
 # brick_arr[0].x = np.random.randint(3, 7)
 # brick_arr[0].y = np.random.randint(3, 8)
@@ -39,8 +48,24 @@ for i in range(no_of_bricks):
 # brick_arr[5].x = np.random.randint(43, 47)
 # brick_arr[5].y = np.random.randint(3, 8)
 
-unbreakable = np.random.randint(0, no_of_bricks)
-brick_arr[unbreakable].strength = 1000
+for i in range(no_of_unbreakable_bricks):
+    brick_arr[no_of_breakable_bricks + i] = Unbreakable(no_of_breakable_bricks+i)
+    brick_arr[no_of_breakable_bricks + i].strength = 1000
+
+for i in range(no_of_exploding_bricks):
+    brick_arr[no_of_breakable_bricks + no_of_unbreakable_bricks + i] = Exploding(no_of_breakable_bricks + no_of_unbreakable_bricks + i)
+
+brick_arr[8].x = 3
+brick_arr[8].y = 3
+brick_arr[9].x = 7
+brick_arr[9].y = 3
+brick_arr[0].x = 11
+brick_arr[0].y = 3
+
+# populate bricks
+# end game after all breakable bricks destroyed, calc score based on lives left and time
+# change brick ball collision to make sesk
+# screen class
 
 for k in range(3):
     newPaddle = Paddle(7)
@@ -67,11 +92,12 @@ for k in range(3):
         screen[rows+1][0] = ' '
         screen[0][columns+1] = ' '
         screen[rows+1][columns+1] = ' '
+        # screen[7+brick_length-1][3-1] = '+'
         if(not ticks % ball_speed):
             newBall.move()
         ticks += 1
 
-        for i in range(no_of_bricks):
+        for i in range(no_of_breakable_bricks + no_of_unbreakable_bricks + no_of_exploding_bricks):
             brick_arr[i].disp(screen)
         newPaddle.disp(screen)
 
@@ -81,7 +107,6 @@ for k in range(3):
         newBall.brick_collision(screen, brick_arr)
 
         newBall.disp(screen)
-
 
         if(newBall.y == rows+1):
             lives -= 1
@@ -94,31 +119,31 @@ for k in range(3):
         print('\033[0;0H')
         # print("\033[H\033[J")
 
-        curr_row = -1
         for i in screen:
-            curr_row += 1
-            curr_col = -1
             for j in i:
-                curr_col += 1
-                if(j == '0' or j == '1' or j == '2' or j == '3' or j == '4'or j == '5'or j == '6'or j == '7'or j == '8'or j == '9'or j == '10'):
-                    curr = int (j)
-                    if(brick_arr[curr].strength > 3):
-                        print(Fore.LIGHTBLACK_EX + Back.LIGHTBLACK_EX, end = "")
+                if(j == '0' or j == '1' or j == '2' or j == '3' or j == '4' or j == '5' or j == '6' or j == '7' or j == '8' or j == '9' or j == '10' or j == '11' or j == '12' or j == '13' or j == '14' or j == '15' or j == '16'):
+                    curr = int(j)
+                    if(brick_arr[curr].strength == 69):
+                        print(Fore.MAGENTA + Back.MAGENTA, end="")
                         print(' ', end="")
                         print(Style.RESET_ALL, end="")
-                    if(brick_arr[curr].strength == 3):
-                        print(Fore.RED + Back.RED, end = "")
+                    elif(brick_arr[curr].strength > 3):
+                        print(Fore.LIGHTBLACK_EX + Back.LIGHTBLACK_EX, end="")
                         print(' ', end="")
                         print(Style.RESET_ALL, end="")
-                    if(brick_arr[curr].strength == 2):
-                        print(Fore.YELLOW + Back.YELLOW, end = "")
+                    elif(brick_arr[curr].strength == 3):
+                        print(Fore.RED + Back.RED, end="")
                         print(' ', end="")
                         print(Style.RESET_ALL, end="")
-                    if(brick_arr[curr].strength == 1):
-                        print(Fore.GREEN + Back.GREEN, end = "")
+                    elif(brick_arr[curr].strength == 2):
+                        print(Fore.YELLOW + Back.YELLOW, end="")
                         print(' ', end="")
                         print(Style.RESET_ALL, end="")
-                    if(brick_arr[curr].strength == 0):
+                    elif(brick_arr[curr].strength == 1):
+                        print(Fore.GREEN + Back.GREEN, end="")
+                        print(' ', end="")
+                        print(Style.RESET_ALL, end="")
+                    elif(brick_arr[curr].strength == 0):
                         print(' ', end="")
                 else:
                     print(j, end="")
@@ -135,7 +160,6 @@ for k in range(3):
         if(key == "x"):
             system("stty echo")
             quit()
-        # sleep(0.05)
 
 print("GAME OVER")
 

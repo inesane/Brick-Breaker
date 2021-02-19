@@ -13,8 +13,17 @@ brick_length = 4
 no_of_bricks = 5
 lives = 3
 
+
 class PowerUp:
-    def __init__(self, x, y, arr):
+    def __init__(self, x, y):
         self.x = x
         self.y = y
-        self.y_vel = 1
+        self.y_vel = -1
+
+    def move(self):
+        if(self.y < rows):
+            self.y += self.y_vel
+
+    def disp(self, arr):
+        arr[self.y][self.x] = 'e'
+        arr[self.y][self.x] = 'p'
