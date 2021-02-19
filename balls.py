@@ -57,7 +57,7 @@ class Ball:
             self.x_vel = -1*self.x_vel
 
     def paddle_collison(self, arr, Paddle):
-        if(self.y > rows):
+        if(self.y > rows or (self.x + self.x_vel >= columns + 1)):
             return
         if((arr[self.y+1][self.x] == paddle_char) and (self.y_vel == -1)):
             self.y_vel = 1
@@ -66,17 +66,16 @@ class Ball:
                 self.x_vel = -1*((self.x - Paddle.x) - (int)(Paddle.length/2))
             else:
                 self.x_vel = -1*(Paddle.x + (int)(Paddle.length/2) - self.x)
-        elif(self.x + self.x_vel < columns + 1):
-            if((arr[self.y+1][self.x+self.x_vel] == paddle_char) and (self.y_vel == -1)):
-                if(self.x+self.x_vel > columns):
-                    return
-                self.y_vel = 1
-                self.y = rows - 1
-                self.x += self.x_vel
-                if(Paddle.length % 2 == 0):
-                    self.x_vel = -1*((self.x - Paddle.x) - (int)(Paddle.length/2))
-                else:
-                    self.x_vel = -1*(Paddle.x + (int)(Paddle.length/2) - self.x)
+        elif((arr[self.y+1][self.x+self.x_vel] == paddle_char) and (self.y_vel == -1)):
+            if(self.x+self.x_vel > columns):
+                return
+            self.y_vel = 1
+            self.y = rows - 1
+            self.x += self.x_vel
+            if(Paddle.length % 2 == 0):
+                self.x_vel = -1*((self.x - Paddle.x) - (int)(Paddle.length/2))
+            else:
+                self.x_vel = -1*(Paddle.x + (int)(Paddle.length/2) - self.x)
 
     def brick_collision(self, arr, Brick_arr):
         if(self.y > rows or self.y < 1 or self.x < 1 or self.x > columns):

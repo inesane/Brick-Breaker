@@ -56,16 +56,18 @@ for i in range(no_of_exploding_bricks):
     brick_arr[no_of_breakable_bricks + no_of_unbreakable_bricks + i] = Exploding(no_of_breakable_bricks + no_of_unbreakable_bricks + i)
 
 brick_arr[8].x = 3
-brick_arr[8].y = 3
+brick_arr[8].y = 4
 brick_arr[9].x = 7
-brick_arr[9].y = 3
+brick_arr[9].y = 5
 brick_arr[0].x = 11
 brick_arr[0].y = 3
 
 # populate bricks
 # end game after all breakable bricks destroyed, calc score based on lives left and time
 # change brick ball collision to make sesk
-# screen class
+# screen class?
+# fix printing of stuff so that it looks nice after game ends
+# fix edge collision for paddle maybe
 
 for k in range(3):
     newPaddle = Paddle(7)
