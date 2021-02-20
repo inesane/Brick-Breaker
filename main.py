@@ -74,6 +74,7 @@ for k in range(3):
     newBall = Ball(newPaddle)
     ball_move = 0
     ticks = 3
+    through_ball = 0
 
     while True:
         time_played = time.time()
@@ -106,8 +107,10 @@ for k in range(3):
         if(ball_move == 1):
             newBall.paddle_collison(screen, newPaddle)
             
-
-        newBall.brick_collision(screen, brick_arr)
+        if(through_ball == 0):
+            newBall.brick_collision(screen, brick_arr)
+        else:
+            newBall.brick_destroy(screen, brick_arr)
 
         i = 0
 
@@ -125,16 +128,16 @@ for k in range(3):
                 if(config.active_powerups[i].which == 2):
                     newPaddle.length += 2
                 if(config.active_powerups[i].which == 3):
-                    newPaddle.length += 2
+                    through_ball = 0
                 if(config.active_powerups[i].which == 4):
                     if(newBall.x_vel > 0):
                             newBall.x_vel -= 1
                     if(newBall.x_vel < 0):
                             newBall.x_vel += 1
                 if(config.active_powerups[i].which == 5):
-                    newPaddle.length += 2
+                    through_ball = 0
                 if(config.active_powerups[i].which == 6):
-                    newPaddle.length += 2
+                    through_ball = 0
                 config.active_powerups.remove(config.active_powerups[i])
                 i -= 1
                 flag = 1
@@ -146,7 +149,7 @@ for k in range(3):
                     newPaddle.length -= 2
                     config.active_powerups[i].active = 1
                 if(config.active_powerups[i].which == 3 and config.active_powerups[i].active == 0):
-                    newPaddle.length -= 2
+                    through_ball = 1
                     config.active_powerups[i].active = 1
                 if(config.active_powerups[i].which == 4 and config.active_powerups[i].active == 0):
                     if(newBall.x_vel > 0):
@@ -155,10 +158,10 @@ for k in range(3):
                         newBall.x_vel -= 1
                     config.active_powerups[i].active = 1
                 if(config.active_powerups[i].which == 5 and config.active_powerups[i].active == 0):
-                    newPaddle.length -= 2
+                    through_ball = 1
                     config.active_powerups[i].active = 1
                 if(config.active_powerups[i].which == 6 and config.active_powerups[i].active == 0):
-                    newPaddle.length -= 2
+                    through_ball = 1
                     config.active_powerups[i].active = 1
             i += 1
         newBall.disp(screen)
@@ -173,7 +176,7 @@ for k in range(3):
 
         for i in screen:
             for j in i:
-                if(j == '0' or j == '1' or j == '2' or j == '3' or j == '4' or j == '5' or j == '6' or j == '7' or j == '8' or j == '9' or j == '10' or j == '11' or j == '12' or j == '13' or j == '14' or j == '15' or j == '16'):
+                if(j == '0' or j == '1' or j == '2' or j == '3' or j == '4' or j == '5' or j == '6' or j == '7' or j == '8' or j == '9' or j == '10' or j == '11' or j == '12' or j == '13' or j == '14' or j == '15' or j == '16' or j == '17' or j == '18' or j == '19' or j == '20' or j == '21' or j == '22' or j == '23' or j == '24' or j == '25' or j == '26' or j == '27' or j == '28' or j == '29' or j == '30' or j == '31' or j == '32' or j == '33' or j == '34' or j == '35' or j == '36' or j == '37' or j == '38' or j == '39' or j == '40' or j == '41'):
                     curr = int(j)
                     if(brick_arr[curr].strength == 69):
                         print(Fore.MAGENTA + Back.MAGENTA, end="")
