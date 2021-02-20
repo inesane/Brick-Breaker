@@ -11,9 +11,10 @@ columns = 80
 paddle_char = '='
 ball_char = 'O'
 brick_length = 4
-no_of_bricks = 5
 lives = 3
-
+no_of_breakable_bricks = 6
+no_of_unbreakable_bricks = 2
+no_of_exploding_bricks = 4
 
 class Brick:
     def __init__(self, index):
@@ -37,10 +38,14 @@ class Brick:
                 config.score += 10
             self.strength -= 1
 
-    def destroy(self):
+    def destroy(self, arr, Brick_arr):
+        self.collision(arr, Brick_arr)
         if(self.strength > 0):
             self.strength = 0
             config.score += 10
+            for i in range(brick_length):
+                for j in range(brick_length):
+                    arr[self.y + j][self.x + i] = ' '
 
 
 class Unbreakable(Brick):
@@ -67,35 +72,57 @@ class Exploding(Brick):
         super().__init__(index)
 
     def collision(self, arr, Brick_arr):
-        self.destroy()
+        if(self.strength > 0):
+            self.strength = 0
+            config.score += 10
+            for i in range(brick_length):
+                for j in range(brick_length):
+                    arr[self.y + j][self.x + i] = ' '
+
         if((arr[self.y-1][self.x] != ' ') and (arr[self.y-1][self.x] != ball_char)):
             curr = int(arr[self.y-1][self.x])
-            Brick_arr[curr].destroy()
+            Brick_arr[curr].destroy(arr, Brick_arr)
 
         if((arr[self.y][self.x-1] != ' ') and (arr[self.y][self.x-1] != ball_char)):
             curr = int(arr[self.y][self.x-1])
-            Brick_arr[curr].destroy()
+            Brick_arr[curr].destroy(arr, Brick_arr)
 
         if((arr[self.y+brick_length][self.x] != ' ') and (arr[self.y+brick_length][self.x] != ball_char)):
             curr = int(arr[self.y+brick_length][self.x])
-            Brick_arr[curr].destroy()
+            Brick_arr[curr].destroy(arr, Brick_arr)
 
         if((arr[self.y+brick_length-1][self.x-1] != ' ') and (arr[self.y+brick_length-1][self.x-1] != ball_char)):
             curr = int(arr[self.y+brick_length-1][self.x-1])
-            Brick_arr[curr].destroy()
+            Brick_arr[curr].destroy(arr, Brick_arr)
 
         if((arr[self.y][self.x+brick_length] != ' ') and (arr[self.y][self.x+brick_length] != ball_char)):
             curr = int(arr[self.y][self.x+brick_length])
-            Brick_arr[curr].destroy()
+            Brick_arr[curr].destroy(arr, Brick_arr)
 
         if((arr[self.y-1][self.x+brick_length-1] != ' ') and (arr[self.y-1][self.x+brick_length-1] != ball_char)):
             curr = int(arr[self.y-1][self.x+brick_length-1])
-            Brick_arr[curr].destroy()
+            Brick_arr[curr].destroy(arr, Brick_arr)
 
         if((arr[self.y+brick_length][self.x+brick_length-1] != ' ') and (arr[self.y+brick_length][self.x+brick_length-1] != ball_char)):
             curr = int(arr[self.y+brick_length][self.x+brick_length-1])
-            Brick_arr[curr].destroy()
+            Brick_arr[curr].destroy(arr, Brick_arr)
 
         if((arr[self.y+brick_length-1][self.x+brick_length] != ' ') and (arr[self.y+brick_length-1][self.x+brick_length] != ball_char)):
             curr = int(arr[self.y+brick_length-1][self.x+brick_length])
-            Brick_arr[curr].destroy()
+            Brick_arr[curr].destroy(arr, Brick_arr)
+        
+        if((arr[self.y-1][self.x-1] != ' ') and (arr[self.y-1][self.x-1] != ball_char)):
+            curr = int(arr[self.y-1][self.x-1])
+            Brick_arr[curr].destroy(arr, Brick_arr)
+        
+        if((arr[self.y-1][self.x+brick_length] != ' ') and (arr[self.y-1][self.x+brick_length] != ball_char)):
+            curr = int(arr[self.y-1][self.x+brick_length])
+            Brick_arr[curr].destroy(arr, Brick_arr)
+        
+        if((arr[self.y+brick_length][self.x-1] != ' ') and (arr[self.y+brick_length][self.x-1] != ball_char)):
+            curr = int(arr[self.y+brick_length][self.x-1])
+            Brick_arr[curr].destroy(arr, Brick_arr)
+        
+        if((arr[self.y+brick_length][self.x+brick_length] != ' ') and (arr[self.y+brick_length][self.x+brick_length] != ball_char)):
+            curr = int(arr[self.y+brick_length][self.x+brick_length])
+            Brick_arr[curr].destroy(arr, Brick_arr)

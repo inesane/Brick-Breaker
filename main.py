@@ -55,15 +55,14 @@ for i in range(no_of_unbreakable_bricks):
 for i in range(no_of_exploding_bricks):
     brick_arr[no_of_breakable_bricks + no_of_unbreakable_bricks + i] = Exploding(no_of_breakable_bricks + no_of_unbreakable_bricks + i)
 
-brick_arr[8].x = 3
-brick_arr[8].y = 4
-brick_arr[9].x = 7
-brick_arr[9].y = 5
-brick_arr[0].x = 11
-brick_arr[0].y = 3
+# brick_arr[8].x = 3
+# brick_arr[8].y = 4
+# brick_arr[9].x = 7
+# brick_arr[9].y = 5
+# brick_arr[0].x = 11
+# brick_arr[0].y = 3
 
 # populate bricks
-# end game after all breakable bricks destroyed, calc score based on lives left and time
 # change brick ball collision to make sesk
 # screen class?
 # fix printing of stuff so that it looks nice after game ends
@@ -94,7 +93,7 @@ for k in range(3):
         screen[rows+1][0] = ' '
         screen[0][columns+1] = ' '
         screen[rows+1][columns+1] = ' '
-        # screen[7+brick_length-1][3-1] = '+'
+
         if(not ticks % ball_speed):
             newBall.move()
         ticks += 1
@@ -115,6 +114,9 @@ for k in range(3):
             break
 
         print("LIVES: ", lives)
+        # minutes = round((round(time_played - initial_time))/60)
+        # seconds = (round(time_played - initial_time))%60
+        # print("TIME:  %d:%d" % (minutes, seconds))
         print("TIME:  ", round(time_played - initial_time))
         print("SCORE: ", config.score)
 
@@ -160,9 +162,31 @@ for k in range(3):
             ball_move = 1
 
         if(key == "x"):
+            print("LIVES: ", lives)
+            print("TIME:  ", round(time_played - initial_time))
+            print("SCORE: ", config.score)
+            system("stty echo")
+            quit()
+        
+        broken = 0
+        for i in range (no_of_breakable_bricks):
+            if(brick_arr[i].strength == 0):
+                broken+=1
+        for i in range (no_of_exploding_bricks):
+            if(brick_arr[no_of_breakable_bricks+no_of_unbreakable_bricks].strength == 0):
+                broken+=1
+        if(broken == no_of_breakable_bricks+no_of_exploding_bricks):
+            config.score += lives*20
+            print("LIVES: ", lives)
+            print("TIME:  ", round(time_played - initial_time))
+            print("SCORE: ", config.score)
+            print("GAME OVER")
             system("stty echo")
             quit()
 
+print("LIVES: ", lives)
+print("TIME:  ", round(time_played - initial_time))
+print("SCORE: ", config.score)
 print("GAME OVER")
 
 # except:
