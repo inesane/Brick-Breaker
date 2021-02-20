@@ -55,17 +55,18 @@ for i in range(no_of_unbreakable_bricks):
 for i in range(no_of_exploding_bricks):
     brick_arr[no_of_breakable_bricks + no_of_unbreakable_bricks + i] = Exploding(no_of_breakable_bricks + no_of_unbreakable_bricks + i)
 
-# brick_arr[8].x = 3
-# brick_arr[8].y = 4
-# brick_arr[9].x = 7
-# brick_arr[9].y = 5
-# brick_arr[0].x = 11
-# brick_arr[0].y = 3
+brick_arr[8].x = 3
+brick_arr[8].y = 4
+brick_arr[9].x = 7
+brick_arr[9].y = 5
+brick_arr[10].x = 11
+brick_arr[10].y = 3
+brick_arr[0].x = 15
+brick_arr[0].y = 3
 
 # populate bricks
 # change brick ball collision to make sesk
-# screen class?
-# fix printing of stuff so that it looks nice after game ends
+# get code out of main? move shit to config?
 # fix edge collision for paddle maybe
 
 for k in range(3):
@@ -104,21 +105,68 @@ for k in range(3):
 
         if(ball_move == 1):
             newBall.paddle_collison(screen, newPaddle)
+            
 
         newBall.brick_collision(screen, brick_arr)
 
+        i = 0
+
+        while (i < len(config.falling_powerups)):
+            if(config.falling_powerups[i].move()):
+                config.falling_powerups[i].disp(screen)
+                config.falling_powerups[i].caught(screen)
+                i += 1
+        i = 0
+        while (i < len(config.active_powerups)):
+            flag = 0
+            if(time_played - config.active_powerups[i].time > 20):
+                if(config.active_powerups[i].which == 1):
+                    newPaddle.length -= 2
+                if(config.active_powerups[i].which == 2):
+                    newPaddle.length += 2
+                if(config.active_powerups[i].which == 3):
+                    newPaddle.length += 2
+                if(config.active_powerups[i].which == 4):
+                    if(newBall.x_vel > 0):
+                            newBall.x_vel -= 1
+                    if(newBall.x_vel < 0):
+                            newBall.x_vel += 1
+                if(config.active_powerups[i].which == 5):
+                    newPaddle.length += 2
+                if(config.active_powerups[i].which == 6):
+                    newPaddle.length += 2
+                config.active_powerups.remove(config.active_powerups[i])
+                i -= 1
+                flag = 1
+            if(flag == 0):
+                if(config.active_powerups[i].which == 1 and config.active_powerups[i].active == 0):
+                    newPaddle.length += 2
+                    config.active_powerups[i].active = 1
+                if(config.active_powerups[i].which == 2 and config.active_powerups[i].active == 0):
+                    newPaddle.length -= 2
+                    config.active_powerups[i].active = 1
+                if(config.active_powerups[i].which == 3 and config.active_powerups[i].active == 0):
+                    newPaddle.length -= 2
+                    config.active_powerups[i].active = 1
+                if(config.active_powerups[i].which == 4 and config.active_powerups[i].active == 0):
+                    if(newBall.x_vel > 0):
+                        newBall.x_vel += 1
+                    if(newBall.x_vel < 0):
+                        newBall.x_vel -= 1
+                    config.active_powerups[i].active = 1
+                if(config.active_powerups[i].which == 5 and config.active_powerups[i].active == 0):
+                    newPaddle.length -= 2
+                    config.active_powerups[i].active = 1
+                if(config.active_powerups[i].which == 6 and config.active_powerups[i].active == 0):
+                    newPaddle.length -= 2
+                    config.active_powerups[i].active = 1
+            i += 1
         newBall.disp(screen)
 
         if(newBall.y == rows+1):
             lives -= 1
             break
-
-        print("LIVES: ", lives)
-        # minutes = round((round(time_played - initial_time))/60)
-        # seconds = (round(time_played - initial_time))%60
-        # print("TIME:  %d:%d" % (minutes, seconds))
-        print("TIME:  ", round(time_played - initial_time))
-        print("SCORE: ", config.score)
+        # print(newBall.x_vel)
 
         print('\033[0;0H')
         # print("\033[H\033[J")
@@ -152,6 +200,26 @@ for k in range(3):
                 else:
                     print(j, end="")
 
+        print("LIVES: ", lives)
+        print("TIME:  ", round(time_played - initial_time))
+        print("SCORE: ", config.score)
+        power_up_print = ""
+        for i in range (len(config.active_powerups)):
+            if(config.active_powerups[i].which == 1):
+                power_up_print += "ep  "
+            if(config.active_powerups[i].which == 2):
+                power_up_print += "sp  "
+            if(config.active_powerups[i].which == 3):
+                power_up_print += "bm  "
+            if(config.active_powerups[i].which == 4):
+                power_up_print += "fb  "
+            if(config.active_powerups[i].which == 5):
+                power_up_print += "tb  "
+            if(config.active_powerups[i].which == 6):
+                power_up_print += "pg  "
+        print('\033[0K', end='')
+        print("ACTIVE POWER UPS: ", power_up_print)
+
         if(key == "d" or key == "a"):
             newPaddle.move(key)
             if(ball_move == 0):
@@ -162,9 +230,6 @@ for k in range(3):
             ball_move = 1
 
         if(key == "x"):
-            print("LIVES: ", lives)
-            print("TIME:  ", round(time_played - initial_time))
-            print("SCORE: ", config.score)
             system("stty echo")
             quit()
         
@@ -176,17 +241,16 @@ for k in range(3):
             if(brick_arr[no_of_breakable_bricks+no_of_unbreakable_bricks].strength == 0):
                 broken+=1
         if(broken == no_of_breakable_bricks+no_of_exploding_bricks):
-            config.score += lives*20
-            print("LIVES: ", lives)
-            print("TIME:  ", round(time_played - initial_time))
-            print("SCORE: ", config.score)
-            print("GAME OVER")
+            # config.score += lives*20
+            print("WOW BHAIYA")
             system("stty echo")
             quit()
 
-print("LIVES: ", lives)
-print("TIME:  ", round(time_played - initial_time))
-print("SCORE: ", config.score)
+    config.no_of_falling_powerups = 0
+    config.no_of_active_powerups = 0
+    config.active_powerups.clear()
+    config.falling_powerups.clear()
+
 print("GAME OVER")
 
 # except:

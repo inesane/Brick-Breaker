@@ -27,9 +27,9 @@ class Paddle:
             arr[self.y-1][i] = paddle_char
 
     def move(self, key):
-        if((self.x + self.length >= columns) and (key == "d")):
+        if((self.x + self.length >= columns + 1) and (key == "d")):
             return
-        if(self.x <= 3 and key == "a"):
+        if(self.x <= 2 and key == "a"):
             return
         else:
             if(key == "a"):

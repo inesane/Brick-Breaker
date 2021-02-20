@@ -1,10 +1,6 @@
-import colorama
-from input import input_to, Get
-from os import system
 import numpy as np
-from time import sleep
-from colorama import Back, Fore, Style
 import config
+from powerups import ExpandPaddle, ShrinkPaddle, BallMultiplier, FastBall, ThroughBall, PaddleGrab
 
 rows = 30
 columns = 80
@@ -35,12 +31,42 @@ class Brick:
     def collision(self, arr, Brick_arr):
         if (self.strength > 0):
             if(self.strength == 1):
+                rand = np.random.randint(1,4)
+                if(rand%3==0):
+                    rand2 = np.random.randint(1,7)
+                    if(rand2 == 1):
+                        config.falling_powerups.append(ExpandPaddle(self.x, self.y))
+                    if(rand2 == 2):
+                        config.falling_powerups.append(ShrinkPaddle(self.x, self.y))
+                    if(rand2 == 3):
+                        config.falling_powerups.append(BallMultiplier(self.x, self.y))
+                    if(rand2 == 4):
+                        config.falling_powerups.append(FastBall(self.x, self.y))
+                    if(rand2 == 5):
+                        config.falling_powerups.append(ThroughBall(self.x, self.y))
+                    if(rand2 == 6):
+                        config.falling_powerups.append(PaddleGrab(self.x, self.y))
                 config.score += 10
             self.strength -= 1
 
     def destroy(self, arr, Brick_arr):
         self.collision(arr, Brick_arr)
         if(self.strength > 0):
+            rand = np.random.randint(1,4)
+            if(rand%3==0):
+                rand2 = np.random.randint(1,7)
+                if(rand2 == 1):
+                    config.falling_powerups.append(ExpandPaddle(self.x, self.y))
+                if(rand2 == 2):
+                    config.falling_powerups.append(ShrinkPaddle(self.x, self.y))
+                if(rand2 == 3):
+                    config.falling_powerups.append(BallMultiplier(self.x, self.y))
+                if(rand2 == 4):
+                    config.falling_powerups.append(FastBall(self.x, self.y))
+                if(rand2 == 5):
+                    config.falling_powerups.append(ThroughBall(self.x, self.y))
+                if(rand2 == 6):
+                    config.falling_powerups.append(PaddleGrab(self.x, self.y))
             self.strength = 0
             config.score += 10
             for i in range(brick_length):
@@ -73,6 +99,21 @@ class Exploding(Brick):
 
     def collision(self, arr, Brick_arr):
         if(self.strength > 0):
+            rand = np.random.randint(1,4)
+            if(rand%3==0):
+                rand2 = np.random.randint(1,7)
+                if(rand2 == 1):
+                    config.falling_powerups.append(ExpandPaddle(self.x, self.y))
+                if(rand2 == 2):
+                    config.falling_powerups.append(ShrinkPaddle(self.x, self.y))
+                if(rand2 == 3):
+                    config.falling_powerups.append(BallMultiplier(self.x, self.y))
+                if(rand2 == 4):
+                    config.falling_powerups.append(FastBall(self.x, self.y))
+                if(rand2 == 5):
+                    config.falling_powerups.append(ThroughBall(self.x, self.y))
+                if(rand2 == 6):
+                    config.falling_powerups.append(PaddleGrab(self.x, self.y))
             self.strength = 0
             config.score += 10
             for i in range(brick_length):
