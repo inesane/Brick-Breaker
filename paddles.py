@@ -5,7 +5,7 @@ import numpy as np
 from time import sleep
 from colorama import Back, Fore, Style
 
-rows = 30
+rows = 40
 columns = 80
 paddle_char = '='
 ball_char = 'O'

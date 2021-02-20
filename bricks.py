@@ -2,7 +2,7 @@ import numpy as np
 import config
 from powerups import ExpandPaddle, ShrinkPaddle, BallMultiplier, FastBall, ThroughBall, PaddleGrab
 
-rows = 30
+rows = 40
 columns = 80
 paddle_char = '='
 ball_char = 'O'
@@ -14,10 +14,10 @@ no_of_exploding_bricks = 4
 
 class Brick:
     def __init__(self, index):
-        # self.x = 0
-        # self.y = 0
-        self.x = np.random.randint(3, columns - 4)
-        self.y = np.random.randint(3, rows - 10)
+        self.x = 0
+        self.y = 0
+        # self.x = np.random.randint(3, columns - 4)
+        # self.y = np.random.randint(3, rows - 10)
         self.index = index
 
     def disp(self, arr):
@@ -114,11 +114,11 @@ class Exploding(Brick):
                     config.falling_powerups.append(ThroughBall(self.x, self.y))
                 if(rand2 == 6):
                     config.falling_powerups.append(PaddleGrab(self.x, self.y))
-            self.strength = 0
-            config.score += 10
-            for i in range(brick_length):
-                for j in range(brick_length):
-                    arr[self.y + j][self.x + i] = ' '
+        self.strength = 0
+        config.score += 10
+        for i in range(brick_length):
+            for j in range(brick_length):
+                arr[self.y + j][self.x + i] = ' '
 
         if((arr[self.y-1][self.x] != ' ') and (arr[self.y-1][self.x] != ball_char)):
             curr = int(arr[self.y-1][self.x])

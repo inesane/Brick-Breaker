@@ -9,7 +9,7 @@ from bricks import Brick
 from powerups import PowerUp
 import config
 
-rows = 30
+rows = 40
 columns = 80
 paddle_char = '='
 ball_char = 'O'
@@ -54,7 +54,7 @@ class Ball:
             self.x_vel = -1*self.x_vel
 
     def paddle_collison(self, arr, Paddle):
-        if(self.y > rows or (self.x >= columns + 1)):
+        if((self.y > rows) or (self.x >= columns + 1) or (self.x < 2)):
             return
         else:
             if((arr[self.y+1][self.x] == paddle_char) and (self.y_vel == -1)):

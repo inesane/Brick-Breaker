@@ -7,7 +7,7 @@ from colorama import Back, Fore, Style
 import config
 import time
 
-rows = 30
+rows = 40
 columns = 80
 paddle_char = '='
 ball_char = 'O'

@@ -11,14 +11,14 @@ import time
 import config
 
 # try:
-rows = 30
+rows = 40
 columns = 80
 paddle_char = '='
 ball_char = 'O'
 brick_length = 4
-no_of_breakable_bricks = 6
-no_of_unbreakable_bricks = 2
-no_of_exploding_bricks = 4
+no_of_breakable_bricks = 20
+no_of_unbreakable_bricks = 10
+no_of_exploding_bricks = 12
 lives = 3
 ball_speed = 3
 initial_time = time.time()
@@ -32,22 +32,6 @@ brick_arr = [0]*(no_of_breakable_bricks+no_of_unbreakable_bricks + no_of_explodi
 for i in range(no_of_breakable_bricks):
     brick_arr[i] = Breakable(str(i))
 
-# brick_arr[0].x = 3
-# brick_arr[0].y = 7
-
-# brick_arr[0].x = np.random.randint(3, 7)
-# brick_arr[0].y = np.random.randint(3, 8)
-# brick_arr[1].x = np.random.randint(11, 15)
-# brick_arr[1].y = np.random.randint(3, 8)
-# brick_arr[2].x = np.random.randint(19, 23)
-# brick_arr[2].y = np.random.randint(3, 8)
-# brick_arr[3].x = np.random.randint(27, 31)
-# brick_arr[3].y = np.random.randint(3, 8)
-# brick_arr[4].x = np.random.randint(35, 39)
-# brick_arr[4].y = np.random.randint(3, 8)
-# brick_arr[5].x = np.random.randint(43, 47)
-# brick_arr[5].y = np.random.randint(3, 8)
-
 for i in range(no_of_unbreakable_bricks):
     brick_arr[no_of_breakable_bricks + i] = Unbreakable(no_of_breakable_bricks+i)
     brick_arr[no_of_breakable_bricks + i].strength = 1000
@@ -55,19 +39,109 @@ for i in range(no_of_unbreakable_bricks):
 for i in range(no_of_exploding_bricks):
     brick_arr[no_of_breakable_bricks + no_of_unbreakable_bricks + i] = Exploding(no_of_breakable_bricks + no_of_unbreakable_bricks + i)
 
-brick_arr[8].x = 3
-brick_arr[8].y = 4
-brick_arr[9].x = 7
-brick_arr[9].y = 5
-brick_arr[10].x = 11
-brick_arr[10].y = 3
-brick_arr[0].x = 15
-brick_arr[0].y = 3
+brick_arr[0].x = np.random.randint(3, 7)
+brick_arr[0].y = np.random.randint(3, 9)
+brick_arr[1].x = np.random.randint(11, 15)
+brick_arr[1].y = np.random.randint(3, 9)
+brick_arr[2].x = np.random.randint(59, 63)
+brick_arr[2].y = np.random.randint(3, 9)
+brick_arr[3].x = np.random.randint(27, 31)
+brick_arr[3].y = np.random.randint(3, 9)
+brick_arr[4].x = np.random.randint(35, 39)
+brick_arr[4].y = np.random.randint(3, 9)
+brick_arr[5].x = np.random.randint(43, 47)
+brick_arr[5].y = np.random.randint(3, 9)
 
-# populate bricks
+brick_arr[20].x = np.random.randint(51, 55)
+brick_arr[20].y = np.random.randint(3, 9)
+brick_arr[21].x = np.random.randint(19, 23)
+brick_arr[21].y = np.random.randint(3, 9)
+brick_arr[22].x = np.random.randint(67, 71)
+brick_arr[22].y = np.random.randint(3, 9)
+brick_arr[23].x = np.random.randint(75, 76)
+brick_arr[23].y = np.random.randint(3, 9)
+
+randi = np.random.randint(1,3)
+
+brick_arr[26].x = np.random.randint(3,6)
+brick_arr[26].y = np.random.randint(15,17)
+brick_arr[7].x = np.random.randint(11,13)
+brick_arr[7].y = np.random.randint(15,17)
+brick_arr[25].x = np.random.randint(17,19)
+brick_arr[25].y = np.random.randint(15,17)
+brick_arr[6].x = np.random.randint(23,25)
+brick_arr[6].y = np.random.randint(15,17)
+brick_arr[27].x = np.random.randint(29,31)
+brick_arr[27].y = np.random.randint(15,17)
+brick_arr[28].x = np.random.randint(35,37)
+brick_arr[28].y = np.random.randint(15,17)
+
+brick_arr[30].x = 5 + randi
+brick_arr[30].y = 20 + randi
+brick_arr[31].x = 9 + randi
+brick_arr[31].y = 22 + randi
+brick_arr[32].x = 13 + randi
+brick_arr[32].y = 23 + randi
+brick_arr[33].x = 17 + randi
+brick_arr[33].y = 24 + randi
+brick_arr[34].x = 21 + randi
+brick_arr[34].y = 22 + randi
+brick_arr[35].x = 25 + randi
+brick_arr[35].y = 21 + randi
+
+brick_arr[12].x = 5 + randi
+brick_arr[12].y = 24 + randi
+brick_arr[13].x = 9 + randi
+brick_arr[13].y = 26 + randi
+brick_arr[14].x = 13 + randi
+brick_arr[14].y = 27 + randi
+brick_arr[15].x = 17 + randi
+brick_arr[15].y = 28 + randi
+brick_arr[16].x = 21 + randi
+brick_arr[16].y = 26 + randi
+brick_arr[17].x = 25 + randi
+brick_arr[17].y = 25 + randi
+
+brick_arr[24].x = 29 + randi
+brick_arr[24].y = 21 + randi
+
+randi = np.random.randint(1,6)
+yrandi = np.random.randint(1,10)
+
+brick_arr[36].x = 50 + randi
+brick_arr[36].y = 12 + yrandi
+brick_arr[37].x = 54 + randi
+brick_arr[37].y = 14 + yrandi
+brick_arr[38].x = 58 + randi
+brick_arr[38].y = 15 + yrandi
+brick_arr[39].x = 62 + randi
+brick_arr[39].y = 16 + yrandi
+brick_arr[40].x = 66 + randi
+brick_arr[40].y = 14 + yrandi
+brick_arr[41].x = 70 + randi
+brick_arr[41].y = 13 + yrandi
+
+brick_arr[18].x = 50 + randi
+brick_arr[18].y = 16 + yrandi
+brick_arr[19].x = 54 + randi
+brick_arr[19].y = 18 + yrandi
+brick_arr[8].x = 58 + randi
+brick_arr[8].y = 19 + yrandi
+brick_arr[9].x = 62 + randi
+brick_arr[9].y = 20 + yrandi
+brick_arr[10].x = 66 + randi
+brick_arr[10].y = 18 + yrandi
+brick_arr[11].x = 70 + randi
+brick_arr[11].y = 17 + yrandi
+
+brick_arr[29].x = 46 + randi
+brick_arr[29].y = 12 + yrandi
+
 # change brick ball collision to make sesk
 # get code out of main? move shit to config?
 # fix edge collision for paddle maybe
+# weird out of axis collision right side
+# paddle ball overlapping sometimes
 
 for k in range(3):
     newPaddle = Paddle(7)
@@ -176,7 +250,7 @@ for k in range(3):
 
         for i in screen:
             for j in i:
-                if(j == '0' or j == '1' or j == '2' or j == '3' or j == '4' or j == '5' or j == '6' or j == '7' or j == '8' or j == '9' or j == '10' or j == '11' or j == '12' or j == '13' or j == '14' or j == '15' or j == '16' or j == '17' or j == '18' or j == '19' or j == '20' or j == '21' or j == '22' or j == '23' or j == '24' or j == '25' or j == '26' or j == '27' or j == '28' or j == '29' or j == '30' or j == '31' or j == '32' or j == '33' or j == '34' or j == '35' or j == '36' or j == '37' or j == '38' or j == '39' or j == '40' or j == '41'):
+                if(j == '0' or j == '1' or j == '2' or j == '3' or j == '4' or j == '5' or j == '6' or j == '7' or j == '8' or j == '9' or j == '10' or j == '11' or j == '12' or j == '13' or j == '14' or j == '15' or j == '16' or j == '17' or j == '18' or j == '19' or j == '20' or j == '21' or j == '22' or j == '23' or j == '24' or j == '25' or j == '26' or j == '27' or j == '28' or j == '29' or j == '30' or j == '31' or j == '32' or j == '33' or j == '34' or j == '35' or j == '36' or j == '37' or j == '38' or j == '39' or j == '40' or j == '41' or j == '42' or j == '43' or j == '44' or j == '45'):
                     curr = int(j)
                     if(brick_arr[curr].strength == 69):
                         print(Fore.MAGENTA + Back.MAGENTA, end="")
@@ -241,8 +315,9 @@ for k in range(3):
             if(brick_arr[i].strength == 0):
                 broken+=1
         for i in range (no_of_exploding_bricks):
-            if(brick_arr[no_of_breakable_bricks+no_of_unbreakable_bricks].strength == 0):
+            if(brick_arr[no_of_breakable_bricks+no_of_unbreakable_bricks + i].strength == 0):
                 broken+=1
+        # print(broken)
         if(broken == no_of_breakable_bricks+no_of_exploding_bricks):
             # config.score += lives*20
             print("WOW BHAIYA")

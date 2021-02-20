@@ -29,18 +29,6 @@ def alarmHandler(signum, frame):
     raise AlarmException
 
 
-# def input_to(timeout=0.1):
-#     """Taking input from user."""
-#     signal.signal(signal.SIGALRM, alarmHandler)
-#     signal.setitimer(signal.ITIMER_REAL, timeout)
-#     try:
-#         text = Get()()
-#         signal.alarm(0)
-#         return text
-#     except AlarmException:
-#         signal.signal(signal.SIGALRM, signal.SIG_IGN)
-#         return None
-
 def input_to(getch, timeout=0.03):
     """Taking input from user."""
     signal.signal(signal.SIGALRM, alarmHandler)
