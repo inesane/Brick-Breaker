@@ -139,8 +139,6 @@ brick_arr[29].y = 12 + yrandi
 
 # change brick ball collision to make sesk
 # get code out of main? move shit to config?
-# fix edge collision for paddle maybe
-# weird out of axis collision right side
 # paddle ball overlapping sometimes
 
 for k in range(3):

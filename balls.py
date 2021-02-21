@@ -54,7 +54,7 @@ class Ball:
             self.x_vel = -1*self.x_vel
 
     def paddle_collison(self, arr, Paddle):
-        if((self.y > rows) or (self.x >= columns + 1) or (self.x < 2)):
+        if((self.y > rows) or (self.x + abs(self.x_vel)>= columns + 1) or (self.x < 2)):
             return
         else:
             if((arr[self.y+1][self.x] == paddle_char) and (self.y_vel == -1)):
@@ -100,7 +100,7 @@ class Ball:
                 self.x_vel = 4
 
     def brick_collision(self, arr, Brick_arr):
-        if(self.y > rows or self.y < 1 or self.x < 1 or self.x > columns):
+        if((self.y > rows) or (self.y < 1) or (self.x < 1) or (self.x + abs(self.x_vel) > columns)):
             return
         
         if((arr[self.y][self.x+1] != ' ') and (arr[self.y][self.x+1] != paddle_char) and (arr[self.y][self.x+1] != left_border) and (arr[self.y][self.x+1] != right_border) and (arr[self.y][self.x+1] != bottom_border) and (arr[self.y][self.x+1] != top_border) and (self.x_vel > 0)):
