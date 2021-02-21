@@ -1,15 +1,15 @@
 # Brick-Breaker
 
-Terminal Based Brick Breaker Game
+## Terminal Based Brick Breaker Game
 
-To Run:
+## To Run:
 
 Make sure that numpy and colorama are installed
 
 ```
 python3 main.py
 ```
-How To Play:
+## How To Play:
 
 1. Game Starts. Move Paddle with 'a' to go left and 'd' to go right. Release ball with 'w'.
 
@@ -21,9 +21,9 @@ How To Play:
 
 5. Upon destroying a block, there is a chance of a powerup spawning. Catch the powerups with your paddle to activate them. There are 4 powerups. Expand Paddle (increases paddle length), Shrink Paddle (decreases paddle length), Fast Ball (increases ball velocity) and Through Ball (passes through and destroys all bricks that come in the way).
 
-6. Game ends when all lives are lost or you can press 'x' to end game
+6. Game ends when all lives are lost or all breakable and explosive bricks are destroyed. You can also press 'x' to end game
 
-OOPS Concepts:
+## OOPS Concepts:
 
 1. Inheritance - Breakable, Unbreakable and Exploding Bricks all inherit from parent class Brick. ExpandPaddle, ShrinkPaddle, BallMultiplier, FastBall, ThroughBall and PaddleGrab powerups all inherit from parent class PowerUp
 
