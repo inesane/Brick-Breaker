@@ -25,7 +25,7 @@ python3 main.py
 
 ## OOPS Concepts:
 
-1. Inheritance - Breakable, Unbreakable and Exploding Bricks all inherit from parent class Brick. ExpandPaddle, ShrinkPaddle, BallMultiplier, FastBall, ThroughBall and PaddleGrab powerups all inherit from parent class PowerUp
+1. Inheritance - Breakable, Unbreakable and Exploding Bricks all inherit from parent class Brick. ExpandPaddle, ShrinkPaddle, FastBall and ThroughBall powerups all inherit from parent class PowerUp
 
 2. Polymorphism - Collision function of Exploding Bricks overrides the initial collision function from parent class Brick
 

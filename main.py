@@ -139,7 +139,8 @@ brick_arr[29].y = 12 + yrandi
 
 # change brick ball collision to make sesk
 # get code out of main? move shit to config?
-# paddle ball overlapping sometimes
+# paddle ball overlapping sometimes after wall collision
+# multiple through ball powerups simultaneously once first ends second stops working
 
 for k in range(3):
     newPaddle = Paddle(7)
