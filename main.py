@@ -5,7 +5,7 @@ import numpy as np
 from time import sleep
 from colorama import Back, Fore, Style
 from paddles import Paddle
-from bricks import Unbreakable, Breakable, Exploding
+from bricks import Unbreakable, Breakable, Exploding, Rainbow
 from balls import Ball
 import time
 import config
@@ -19,6 +19,8 @@ brick_length = 4
 no_of_breakable_bricks = 20
 no_of_unbreakable_bricks = 10
 no_of_exploding_bricks = 12
+no_of_rainbow_bricks = 1
+no_of_total_bricks = no_of_breakable_bricks + no_of_unbreakable_bricks + no_of_exploding_bricks + no_of_rainbow_bricks
 lives = 3
 ball_speed = 3
 initial_time = time.time()
@@ -28,7 +30,7 @@ bottom_border = '‾'
 top_border = '_'
 
 system("stty -echo")
-brick_arr = [0]*(no_of_breakable_bricks+no_of_unbreakable_bricks + no_of_exploding_bricks)
+brick_arr = [0]*(no_of_total_bricks)
 for i in range(no_of_breakable_bricks):
     brick_arr[i] = Breakable(str(i))
 
@@ -38,6 +40,9 @@ for i in range(no_of_unbreakable_bricks):
 
 for i in range(no_of_exploding_bricks):
     brick_arr[no_of_breakable_bricks + no_of_unbreakable_bricks + i] = Exploding(no_of_breakable_bricks + no_of_unbreakable_bricks + i)
+
+for i in range(no_of_rainbow_bricks):
+    brick_arr[no_of_breakable_bricks + no_of_unbreakable_bricks + no_of_exploding_bricks + i] = Rainbow(no_of_breakable_bricks + no_of_unbreakable_bricks + no_of_exploding_bricks + i)
 
 brick_arr[0].x = np.random.randint(3, 7)
 brick_arr[0].y = np.random.randint(3, 9)
@@ -137,10 +142,13 @@ brick_arr[11].y = 17 + yrandi
 brick_arr[29].x = 46 + randi
 brick_arr[29].y = 12 + yrandi
 
+brick_arr[42].x = 40
+brick_arr[42].y = 20
+
 # change brick ball collision to make sesk
 # get code out of main? move shit to config?
 # paddle ball overlapping sometimes after wall collision
-# multiple through ball powerups simultaneously once first ends second stops working
+# multiple through ball powerups simultaneously once first ends second stops working (through_ball var)
 
 for k in range(3):
     newPaddle = Paddle(7)
@@ -148,8 +156,11 @@ for k in range(3):
     ball_move = 0
     ticks = 3
     through_ball = 0
+    starting_life_time = time.time()
+    current_life_time = 0
 
     while True:
+        current_life_time = time.time()
         time_played = time.time()
         key = input_to(Get())
 
@@ -173,17 +184,29 @@ for k in range(3):
             newBall.move()
         ticks += 1
 
-        for i in range(no_of_breakable_bricks + no_of_unbreakable_bricks + no_of_exploding_bricks):
+        for i in range(no_of_total_bricks):
             brick_arr[i].disp(screen)
         newPaddle.disp(screen)
 
         if(ball_move == 1):
-            newBall.paddle_collison(screen, newPaddle)
+            newBall.paddle_collison(screen, newPaddle, round(current_life_time - starting_life_time), brick_arr, no_of_total_bricks, ticks)
             
         if(through_ball == 0):
             newBall.brick_collision(screen, brick_arr)
+            for i in range(no_of_rainbow_bricks):
+                if(brick_arr[no_of_breakable_bricks+no_of_unbreakable_bricks+no_of_exploding_bricks+i].collided == 0):
+                    brick_arr[no_of_breakable_bricks+no_of_unbreakable_bricks+no_of_exploding_bricks+i].changeStrength(no_of_breakable_bricks+no_of_unbreakable_bricks+no_of_exploding_bricks+i)
+
         else:
             newBall.brick_destroy(screen, brick_arr)
+
+        i = 0
+
+        for i in range(no_of_total_bricks):
+            if(brick_arr[i].y == 38 and brick_arr[i].strength > 0):
+                    system("stty echo")
+                    quit()
+
 
         i = 0
 
@@ -191,6 +214,7 @@ for k in range(3):
             if(config.falling_powerups[i].move()):
                 config.falling_powerups[i].disp(screen)
                 config.falling_powerups[i].caught(screen)
+                # config.falling_powerups[i].collision(screen)
                 i += 1
         i = 0
         while (i < len(config.active_powerups)):
@@ -316,8 +340,11 @@ for k in range(3):
         for i in range (no_of_exploding_bricks):
             if(brick_arr[no_of_breakable_bricks+no_of_unbreakable_bricks + i].strength == 0):
                 broken+=1
+        for i in range(no_of_rainbow_bricks):
+            if(brick_arr[no_of_breakable_bricks+no_of_unbreakable_bricks+no_of_exploding_bricks + i].strength == 0):
+                broken+=1
         # print(broken)
-        if(broken == no_of_breakable_bricks+no_of_exploding_bricks):
+        if(broken == no_of_breakable_bricks+no_of_exploding_bricks+no_of_rainbow_bricks):
             # config.score += lives*20
             print("WOW BHAIYA")
             system("stty echo")

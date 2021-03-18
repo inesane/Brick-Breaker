@@ -11,6 +11,8 @@ rows = 40
 columns = 80
 paddle_char = '='
 ball_char = 'O'
+left_border = '⎹'
+right_border = '⎸'
 brick_length = 4
 no_of_bricks = 5
 lives = 3
@@ -19,6 +21,7 @@ class PowerUp:
     def __init__(self, x, y):
         self.x = x
         self.y = y
+        self.x_vel = 0
         self.y_vel = 1
         self.ticks = 0
         self.active = 0
@@ -38,6 +41,9 @@ class PowerUp:
         if(arr[self.y+1][self.x] == paddle_char or arr[self.y+1][self.x+1] == paddle_char):
             config.active_powerups.append(self)
             config.falling_powerups.remove(self)
+    
+    # def collision(self, arr):
+        # if(arr[self.y][self.x-1] == left_border)
 
 
 class ExpandPaddle(PowerUp):

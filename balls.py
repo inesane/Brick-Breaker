@@ -53,11 +53,15 @@ class Ball:
         if(self.x <= 2 or self.x >= columns):
             self.x_vel = -1*self.x_vel
 
-    def paddle_collison(self, arr, Paddle):
+    def paddle_collison(self, arr, Paddle, time_passed, brick_arr, no_of_total_bricks, ticks):
+        print(time_passed)
         if((self.y > rows) or (self.x + abs(self.x_vel)>= columns + 1) or (self.x < 2)):
             return
         else:
             if((arr[self.y+1][self.x] == paddle_char) and (self.y_vel == -1)):
+                if(time_passed > 20):
+                    for i in range(no_of_total_bricks):
+                        brick_arr[i].falling()
                 self.y_vel = 1
                 self.y = rows - 1
                 if(Paddle.length % 2 == 0):
@@ -77,6 +81,9 @@ class Ball:
                             if(self.x_vel < 0):
                                 self.x_vel -= 1
             elif((arr[self.y+1][self.x+self.x_vel] == paddle_char) and (self.y_vel == -1)):
+                if(time_passed > 20):
+                    for i in range(no_of_total_bricks):
+                        brick_arr[i].falling()
                 self.y_vel = 1
                 self.y = rows - 1
                 self.x += self.x_vel
