@@ -18,43 +18,87 @@ no_of_bricks = 5
 lives = 3
 
 class PowerUp:
-    def __init__(self, x, y):
+    def __init__(self, x, y, ball_velocities):
         self.x = x
         self.y = y
-        self.x_vel = 0
+        self.y_vel_init = ball_velocities[1]
+        self.x_vel = ball_velocities[0]
         self.y_vel = 1
         self.ticks = 0
         self.active = 0
         self.time = time.time()
+        self.moved = 3
 
     def move(self):
-        if(self.y < rows):
+        if((self.y_vel_init < 0) and (self.moved > 0)):
             self.ticks += 1
             if(self.ticks % 4 == 0):
-                self.y += self.y_vel
+                self.y += self.y_vel_init
+                self.x += self.x_vel
+                self.moved -= 1
             return True
-        if(self.y >= rows):
-            config.falling_powerups.remove(self)
-            return False
+        else:
+            self.y_vel = 1
+            if(self.x <= 2 and self.x_vel < 0):
+                self.x_vel = -1*self.x_vel
+                self.x = 2
+            if(self.x >= columns - 1 and self.x_vel > 0):
+                self.x_vel = -1*self.x_vel
+                self.x = columns - 1
+            if(self.y < 2 and self.y_vel < 0):
+                self.y = 1
+                self.y_vel = 1
+            if(self.y < rows):
+                self.ticks += 1
+                if(self.ticks % 4 == 0):
+                    self.y += self.y_vel
+                    self.x += self.x_vel
+                return True
+            if(self.y >= rows):
+                config.falling_powerups.remove(self)
+                return False
+        # self.ticks+=1
+        # if(self.ticks % 4 == 0):
+        #     self.y += self.y_vel_init
+        #     self.x += self.x_vel
+        #     self.y_vel_init += 1
+        # if(self.x <= 2 and self.x_vel < 0):
+        #     self.x_vel = -1*self.x_vel
+        #     self.x = 2
+        # if(self.x >= columns - 1 and self.x_vel > 0):
+        #     self.x_vel = -1*self.x_vel
+        #     self.x = columns - 1
+        # if(self.y < 2 and self.y_vel_init < 0):
+        #     self.y = 1
+        #     self.y_vel_init *= -1
+
+        # if(self.y < rows):
+        #     return True
+        # if(self.y >= rows):
+        #     config.falling_powerups.remove(self)
+        #     return False
+
     
     def caught(self, arr):
         if(arr[self.y+1][self.x] == paddle_char or arr[self.y+1][self.x+1] == paddle_char):
             config.active_powerups.append(self)
             config.falling_powerups.remove(self)
     
-    # def collision(self, arr):
-        # if(arr[self.y][self.x-1] == left_border)
-
 
 class ExpandPaddle(PowerUp):
     pass
 
-    def __init__(self, x, y):
+    def __init__(self, x, y, ball_velocities):
         self.which = 1
-        super().__init__(x, y)
+        super().__init__(x, y, ball_velocities)
 
 
     def disp(self, arr):
+        if(self.x < 2 and self.x_vel < 0):
+            self.x = 2
+        elif(self.x > columns - 1 and self.x_vel > 0):
+            self.x = columns - 1
+        # if(self.y )
         arr[self.y][self.x] = 'e'
         arr[self.y][self.x+1] = 'p'
 
@@ -62,35 +106,47 @@ class ExpandPaddle(PowerUp):
 class ShrinkPaddle(PowerUp):
     pass
 
-    def __init__(self, x, y):
+    def __init__(self, x, y, ball_velocities):
         self.which = 2
-        super().__init__(x, y)
+        super().__init__(x, y, ball_velocities)
 
     def disp(self, arr):
+        if(self.x < 2 and self.x_vel < 0):
+            self.x = 2
+        elif(self.x > columns - 1 and self.x_vel > 0):
+            self.x = columns - 1
         arr[self.y][self.x] = 's'
         arr[self.y][self.x+1] = 'p'
 
 
-class BallMultiplier(PowerUp):
+class FireBall(PowerUp):
     pass
 
-    def __init__(self, x, y):
+    def __init__(self, x, y, ball_velocities):
         self.which = 3
-        super().__init__(x, y)
+        super().__init__(x, y, ball_velocities)
 
     def disp(self, arr):
-        arr[self.y][self.x] = 'b'
-        arr[self.y][self.x+1] = 'm'
+        if(self.x < 2 and self.x_vel < 0):
+            self.x = 2
+        elif(self.x > columns - 1 and self.x_vel > 0):
+            self.x = columns - 1
+        arr[self.y][self.x] = 'f'
+        arr[self.y][self.x+1] = 'i'
 
 
 class FastBall(PowerUp):
     pass
 
-    def __init__(self, x, y):
+    def __init__(self, x, y, ball_velocities):
         self.which = 4
-        super().__init__(x, y)
+        super().__init__(x, y, ball_velocities)
 
     def disp(self, arr):
+        if(self.x < 2 and self.x_vel < 0):
+            self.x = 2
+        elif(self.x > columns - 1 and self.x_vel > 0):
+            self.x = columns - 1
         arr[self.y][self.x] = 'f'
         arr[self.y][self.x+1] = 'b'
 
@@ -98,22 +154,30 @@ class FastBall(PowerUp):
 class ThroughBall(PowerUp):
     pass
 
-    def __init__(self, x, y):
+    def __init__(self, x, y, ball_velocities):
         self.which = 5
-        super().__init__(x, y)
+        super().__init__(x, y, ball_velocities)
 
     def disp(self, arr):
+        if(self.x < 2 and self.x_vel < 0):
+            self.x = 2
+        elif(self.x > columns - 1 and self.x_vel > 0):
+            self.x = columns - 1
         arr[self.y][self.x] = 't'
         arr[self.y][self.x+1] = 'b'
 
 
-class PaddleGrab(PowerUp):
+class ShootingPaddle(PowerUp):
     pass
 
-    def __init__(self, x, y):
+    def __init__(self, x, y, ball_velocities):
         self.which = 6
-        super().__init__(x, y)
+        super().__init__(x, y, ball_velocities)
 
     def disp(self, arr):
-        arr[self.y][self.x] = 'p'
-        arr[self.y][self.x+1] = 'g'
+        if(self.x < 2 and self.x_vel < 0):
+            self.x = 2
+        elif(self.x > columns - 1 and self.x_vel > 0):
+            self.x = columns - 1
+        arr[self.y][self.x] = 's'
+        arr[self.y][self.x+1] = 'h'
