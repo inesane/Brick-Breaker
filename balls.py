@@ -60,7 +60,7 @@ class Ball:
             return
         else:
             if((arr[self.y+1][self.x] == paddle_char) and (self.y_vel == -1)):
-                if(time_passed > 20):
+                if(time_passed > 40):
                     for i in range(no_of_total_bricks):
                         brick_arr[i].falling()
                         brick_arr[i].disp(arr)
@@ -83,7 +83,7 @@ class Ball:
                             if(self.x_vel < 0):
                                 self.x_vel -= 1
             elif((arr[self.y+1][self.x+self.x_vel] == paddle_char) and (self.y_vel == -1)):
-                if(time_passed > 20):
+                if(time_passed > 40):
                     for i in range(no_of_total_bricks):
                         brick_arr[i].falling()
                         brick_arr[i].disp(arr)
