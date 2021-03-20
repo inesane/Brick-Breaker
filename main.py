@@ -20,12 +20,11 @@ columns = 80
 paddle_char = '='
 ball_char = 'O'
 brick_length = 4
-# no_of_breakable_bricks, no_of_unbreakable_bricks, no_of_exploding_bricks, no_of_rainbow_bricks, no_of_total_bricks
-# no_of_breakable_bricks = 20
-# no_of_unbreakable_bricks = 10
-# no_of_exploding_bricks = 12
-# no_of_rainbow_bricks = 1
-# no_of_total_bricks = no_of_breakable_bricks + no_of_unbreakable_bricks + no_of_exploding_bricks + no_of_rainbow_bricks
+no_of_breakable_bricks = 20
+no_of_unbreakable_bricks = 10
+no_of_exploding_bricks = 12
+no_of_rainbow_bricks = 1
+no_of_total_bricks = no_of_breakable_bricks + no_of_unbreakable_bricks + no_of_exploding_bricks + no_of_rainbow_bricks
 lives = 3
 ball_speed = 3
 initial_time = time.time()
@@ -35,240 +34,228 @@ bottom_border = '‾'
 top_border = '_'
 system("stty -echo")
 next_level = 0
-# brick_arr = [0]*(no_of_total_bricks)
-# for i in range(no_of_breakable_bricks):
-#     brick_arr[i] = Breakable(str(i))
-
-# for i in range(no_of_unbreakable_bricks):
-#     brick_arr[no_of_breakable_bricks + i] = Unbreakable(no_of_breakable_bricks+i)
-#     brick_arr[no_of_breakable_bricks + i].strength = 1000
-
-# for i in range(no_of_exploding_bricks):
-#     brick_arr[no_of_breakable_bricks + no_of_unbreakable_bricks + i] = Exploding(no_of_breakable_bricks + no_of_unbreakable_bricks + i)
-
-# for i in range(no_of_rainbow_bricks):
-#     brick_arr[no_of_breakable_bricks + no_of_unbreakable_bricks + no_of_exploding_bricks + i] = Rainbow(no_of_breakable_bricks + no_of_unbreakable_bricks + no_of_exploding_bricks + i)
-
-# brick_arr[0].x = np.random.randint(3, 7)
-# brick_arr[0].y = np.random.randint(3, 9)
-# brick_arr[1].x = np.random.randint(11, 15)
-# brick_arr[1].y = np.random.randint(3, 9)
-# brick_arr[2].x = np.random.randint(59, 63)
-# brick_arr[2].y = np.random.randint(3, 9)
-# brick_arr[3].x = np.random.randint(27, 31)
-# brick_arr[3].y = np.random.randint(3, 9)
-# brick_arr[4].x = np.random.randint(35, 39)
-# brick_arr[4].y = np.random.randint(3, 9)
-# brick_arr[5].x = np.random.randint(43, 47)
-# brick_arr[5].y = np.random.randint(3, 9)
-
-# brick_arr[20].x = np.random.randint(51, 55)
-# brick_arr[20].y = np.random.randint(3, 9)
-# brick_arr[21].x = np.random.randint(19, 23)
-# brick_arr[21].y = np.random.randint(3, 9)
-# brick_arr[22].x = np.random.randint(67, 71)
-# brick_arr[22].y = np.random.randint(3, 9)
-# brick_arr[23].x = np.random.randint(75, 76)
-# brick_arr[23].y = np.random.randint(3, 9)
-
-# randi = np.random.randint(1,3)
-
-# brick_arr[26].x = np.random.randint(3,6)
-# brick_arr[26].y = np.random.randint(15,17)
-# brick_arr[7].x = np.random.randint(11,13)
-# brick_arr[7].y = np.random.randint(15,17)
-# brick_arr[25].x = np.random.randint(17,19)
-# brick_arr[25].y = np.random.randint(15,17)
-# brick_arr[6].x = np.random.randint(23,25)
-# brick_arr[6].y = np.random.randint(15,17)
-# brick_arr[27].x = np.random.randint(29,31)
-# brick_arr[27].y = np.random.randint(15,17)
-# brick_arr[28].x = np.random.randint(35,37)
-# brick_arr[28].y = np.random.randint(15,17)
-
-# brick_arr[30].x = 5 + randi
-# brick_arr[30].y = 20 + randi
-# brick_arr[31].x = 9 + randi
-# brick_arr[31].y = 22 + randi
-# brick_arr[32].x = 13 + randi
-# brick_arr[32].y = 23 + randi
-# brick_arr[33].x = 17 + randi
-# brick_arr[33].y = 24 + randi
-# brick_arr[34].x = 21 + randi
-# brick_arr[34].y = 22 + randi
-# brick_arr[35].x = 25 + randi
-# brick_arr[35].y = 21 + randi
-
-# brick_arr[12].x = 5 + randi
-# brick_arr[12].y = 24 + randi
-# brick_arr[13].x = 9 + randi
-# brick_arr[13].y = 26 + randi
-# brick_arr[14].x = 13 + randi
-# brick_arr[14].y = 27 + randi
-# brick_arr[15].x = 17 + randi
-# brick_arr[15].y = 28 + randi
-# brick_arr[16].x = 21 + randi
-# brick_arr[16].y = 26 + randi
-# brick_arr[17].x = 25 + randi
-# brick_arr[17].y = 25 + randi
-
-# brick_arr[24].x = 29 + randi
-# brick_arr[24].y = 21 + randi
-
-# randi = np.random.randint(1,6)
-# yrandi = np.random.randint(1,10)
-
-# brick_arr[36].x = 50 + randi
-# brick_arr[36].y = 12 + yrandi
-# brick_arr[37].x = 54 + randi
-# brick_arr[37].y = 14 + yrandi
-# brick_arr[38].x = 58 + randi
-# brick_arr[38].y = 15 + yrandi
-# brick_arr[39].x = 62 + randi
-# brick_arr[39].y = 16 + yrandi
-# brick_arr[40].x = 66 + randi
-# brick_arr[40].y = 14 + yrandi
-# brick_arr[41].x = 70 + randi
-# brick_arr[41].y = 13 + yrandi
-
-# brick_arr[18].x = 50 + randi
-# brick_arr[18].y = 16 + yrandi
-# brick_arr[19].x = 54 + randi
-# brick_arr[19].y = 18 + yrandi
-# brick_arr[8].x = 58 + randi
-# brick_arr[8].y = 19 + yrandi
-# brick_arr[9].x = 62 + randi
-# brick_arr[9].y = 20 + yrandi
-# brick_arr[10].x = 66 + randi
-# brick_arr[10].y = 18 + yrandi
-# brick_arr[11].x = 70 + randi
-# brick_arr[11].y = 17 + yrandi
-
-# brick_arr[29].x = 46 + randi
-# brick_arr[29].y = 12 + yrandi
-
-# brick_arr[42].x = 40
-# brick_arr[42].y = 20
-
-brick_arr1 = [0]*(25)
-for i in range(20):
+brick_arr1 = [0]*(no_of_total_bricks)
+for i in range(no_of_breakable_bricks):
     brick_arr1[i] = Breakable(str(i))
-for i in range(5):
-    brick_arr1[i+20] = Rainbow(str(i+20))
 
-brick_arr1[0].x = 5
-brick_arr1[0].y = 5
-brick_arr1[1].x = 10
-brick_arr1[1].y = 10
-brick_arr1[2].x = 20
-brick_arr1[2].y = 20
-brick_arr1[3].x = 50
-brick_arr1[3].y = 20
-brick_arr1[4].x = 60
-brick_arr1[4].y = 5
-brick_arr1[5].x = 5
-brick_arr1[5].y = 10
-brick_arr1[6].x = 15
-brick_arr1[6].y = 10
-brick_arr1[7].x = 25
-brick_arr1[7].y = 20
-brick_arr1[8].x = 40
-brick_arr1[8].y = 20
-brick_arr1[9].x = 60
-brick_arr1[9].y = 25
-brick_arr1[10].x = 5
-brick_arr1[10].y = 25
-brick_arr1[11].x = 15
-brick_arr1[11].y = 25
-brick_arr1[12].x = 25
-brick_arr1[12].y = 25
-brick_arr1[13].x = 40
-brick_arr1[13].y = 25
-brick_arr1[14].x = 60
-brick_arr1[14].y = 25
-brick_arr1[15].x = 38
-brick_arr1[15].y = 29
-brick_arr1[16].x = 42
-brick_arr1[16].y = 29
-brick_arr1[17].x = 46
-brick_arr1[17].y = 29
-brick_arr1[18].x = 50
-brick_arr1[18].y = 29
-brick_arr1[19].x = 54
-brick_arr1[19].y = 29
-brick_arr1[20].x = 70
-brick_arr1[20].y = 10
-brick_arr1[21].x = 70
-brick_arr1[21].y = 16
-brick_arr1[22].x = 70
-brick_arr1[22].y = 22
-brick_arr1[23].x = 70
-brick_arr1[23].y = 4
-brick_arr1[24].x = 70
-brick_arr1[24].y = 29
+for i in range(no_of_unbreakable_bricks):
+    brick_arr1[no_of_breakable_bricks + i] = Unbreakable(no_of_breakable_bricks+i)
+    brick_arr1[no_of_breakable_bricks + i].strength = 1000
 
-brick_arr2 = [0]*(3)
-for i in range(2):
+for i in range(no_of_exploding_bricks):
+    brick_arr1[no_of_breakable_bricks + no_of_unbreakable_bricks + i] = Exploding(no_of_breakable_bricks + no_of_unbreakable_bricks + i)
+
+for i in range(no_of_rainbow_bricks):
+    brick_arr1[no_of_breakable_bricks + no_of_unbreakable_bricks + no_of_exploding_bricks + i] = Rainbow(no_of_breakable_bricks + no_of_unbreakable_bricks + no_of_exploding_bricks + i)
+
+brick_arr1[0].x = np.random.randint(3, 7)
+brick_arr1[0].y = np.random.randint(3, 9)
+brick_arr1[1].x = np.random.randint(11, 15)
+brick_arr1[1].y = np.random.randint(3, 9)
+brick_arr1[2].x = np.random.randint(59, 63)
+brick_arr1[2].y = np.random.randint(3, 9)
+brick_arr1[3].x = np.random.randint(27, 31)
+brick_arr1[3].y = np.random.randint(3, 9)
+brick_arr1[4].x = np.random.randint(35, 39)
+brick_arr1[4].y = np.random.randint(3, 9)
+brick_arr1[5].x = np.random.randint(43, 47)
+brick_arr1[5].y = np.random.randint(3, 9)
+
+brick_arr1[20].x = np.random.randint(51, 55)
+brick_arr1[20].y = np.random.randint(3, 9)
+brick_arr1[21].x = np.random.randint(19, 23)
+brick_arr1[21].y = np.random.randint(3, 9)
+brick_arr1[22].x = np.random.randint(67, 71)
+brick_arr1[22].y = np.random.randint(3, 9)
+brick_arr1[23].x = np.random.randint(75, 76)
+brick_arr1[23].y = np.random.randint(3, 9)
+
+randi = np.random.randint(1,3)
+
+brick_arr1[26].x = np.random.randint(3,6)
+brick_arr1[26].y = np.random.randint(15,17)
+brick_arr1[7].x = np.random.randint(11,13)
+brick_arr1[7].y = np.random.randint(15,17)
+brick_arr1[25].x = np.random.randint(17,19)
+brick_arr1[25].y = np.random.randint(15,17)
+brick_arr1[6].x = np.random.randint(23,25)
+brick_arr1[6].y = np.random.randint(15,17)
+brick_arr1[27].x = np.random.randint(29,31)
+brick_arr1[27].y = np.random.randint(15,17)
+brick_arr1[28].x = np.random.randint(35,37)
+brick_arr1[28].y = np.random.randint(15,17)
+
+brick_arr1[30].x = 5 + randi
+brick_arr1[30].y = 20 + randi
+brick_arr1[31].x = 9 + randi
+brick_arr1[31].y = 22 + randi
+brick_arr1[32].x = 13 + randi
+brick_arr1[32].y = 23 + randi
+brick_arr1[33].x = 17 + randi
+brick_arr1[33].y = 24 + randi
+brick_arr1[34].x = 21 + randi
+brick_arr1[34].y = 22 + randi
+brick_arr1[35].x = 25 + randi
+brick_arr1[35].y = 21 + randi
+
+brick_arr1[12].x = 5 + randi
+brick_arr1[12].y = 24 + randi
+brick_arr1[13].x = 9 + randi
+brick_arr1[13].y = 26 + randi
+brick_arr1[14].x = 13 + randi
+brick_arr1[14].y = 27 + randi
+brick_arr1[15].x = 17 + randi
+brick_arr1[15].y = 28 + randi
+brick_arr1[16].x = 21 + randi
+brick_arr1[16].y = 26 + randi
+brick_arr1[17].x = 25 + randi
+brick_arr1[17].y = 25 + randi
+
+brick_arr1[24].x = 29 + randi
+brick_arr1[24].y = 21 + randi
+
+randi = np.random.randint(1,6)
+yrandi = np.random.randint(1,10)
+
+brick_arr1[36].x = 50 + randi
+brick_arr1[36].y = 12 + yrandi
+brick_arr1[37].x = 54 + randi
+brick_arr1[37].y = 14 + yrandi
+brick_arr1[38].x = 58 + randi
+brick_arr1[38].y = 15 + yrandi
+brick_arr1[39].x = 62 + randi
+brick_arr1[39].y = 16 + yrandi
+brick_arr1[40].x = 66 + randi
+brick_arr1[40].y = 14 + yrandi
+brick_arr1[41].x = 70 + randi
+brick_arr1[41].y = 13 + yrandi
+
+brick_arr1[18].x = 50 + randi
+brick_arr1[18].y = 16 + yrandi
+brick_arr1[19].x = 54 + randi
+brick_arr1[19].y = 18 + yrandi
+brick_arr1[8].x = 58 + randi
+brick_arr1[8].y = 19 + yrandi
+brick_arr1[9].x = 62 + randi
+brick_arr1[9].y = 20 + yrandi
+brick_arr1[10].x = 66 + randi
+brick_arr1[10].y = 18 + yrandi
+brick_arr1[11].x = 70 + randi
+brick_arr1[11].y = 17 + yrandi
+
+brick_arr1[29].x = 46 + randi
+brick_arr1[29].y = 12 + yrandi
+
+brick_arr1[42].x = 40
+brick_arr1[42].y = 20
+
+brick_arr2 = [0]*(25)
+for i in range(20):
     brick_arr2[i] = Breakable(str(i))
-brick_arr2[2] = Rainbow(str(2))
+for i in range(5):
+    brick_arr2[i+20] = Rainbow(str(i+20))
 
 brick_arr2[0].x = 5
-brick_arr2[0].y = 10
-brick_arr2[1].x = 7
-brick_arr2[1].y = 25
-brick_arr2[2].x = 50
+brick_arr2[0].y = 5
+brick_arr2[1].x = 10
+brick_arr2[1].y = 10
+brick_arr2[2].x = 20
 brick_arr2[2].y = 20
+brick_arr2[3].x = 50
+brick_arr2[3].y = 20
+brick_arr2[4].x = 60
+brick_arr2[4].y = 5
+brick_arr2[5].x = 5
+brick_arr2[5].y = 10
+brick_arr2[6].x = 15
+brick_arr2[6].y = 10
+brick_arr2[7].x = 25
+brick_arr2[7].y = 20
+brick_arr2[8].x = 40
+brick_arr2[8].y = 20
+brick_arr2[9].x = 10
+brick_arr2[9].y = 14
+brick_arr2[10].x = 5
+brick_arr2[10].y = 25
+brick_arr2[11].x = 15
+brick_arr2[11].y = 25
+brick_arr2[12].x = 25
+brick_arr2[12].y = 25
+brick_arr2[13].x = 40
+brick_arr2[13].y = 25
+brick_arr2[14].x = 60
+brick_arr2[14].y = 25
+brick_arr2[15].x = 38
+brick_arr2[15].y = 29
+brick_arr2[16].x = 42
+brick_arr2[16].y = 29
+brick_arr2[17].x = 46
+brick_arr2[17].y = 29
+brick_arr2[18].x = 50
+brick_arr2[18].y = 29
+brick_arr2[19].x = 54
+brick_arr2[19].y = 29
+brick_arr2[20].x = 70
+brick_arr2[20].y = 10
+brick_arr2[21].x = 70
+brick_arr2[21].y = 16
+brick_arr2[22].x = 70
+brick_arr2[22].y = 22
+brick_arr2[23].x = 70
+brick_arr2[23].y = 4
+brick_arr2[24].x = 70
+brick_arr2[24].y = 29
 
-brick_arr3 = [0]*(1)
-for i in range(1):
+brick_arr3 = [0]*(5)
+for i in range(5):
     brick_arr3[i] = Unbreakable(str(i))
 brick_arr3[0].x = 5
 brick_arr3[0].y = 20
-# brick_arr3[1].x = 10
-# brick_arr3[1].y = 10
-# brick_arr3[2].x = 20
-# brick_arr3[2].y = 20
-# brick_arr3[3].x = 50
-# brick_arr3[3].y = 20
+brick_arr3[1].x = 10
+brick_arr3[1].y = 25
+brick_arr3[2].x = 32
+brick_arr3[2].y = 24
+brick_arr3[3].x = 50
+brick_arr3[3].y = 20
+brick_arr3[4].x = 70
+brick_arr3[4].y = 22
 
 # change brick ball collision to make sesk
 # get code out of main? move shit to config?
 # paddle ball overlapping sometimes after wall collision
 # multiple through ball powerups simultaneously once first ends second stops working (through_ball var)
-# random errors with rainbow
-# base 10 bs balls.py curr(int) brick coll
+# random errors with rainbow fireball
 
 for l in range (3):
     config.bullets.clear()
     brick_arr = []
     if(l == 0):
+        # no_of_breakable_bricks = 20
+        # no_of_unbreakable_bricks = 0
+        # no_of_exploding_bricks = 0
+        # no_of_rainbow_bricks = 5
+        # no_of_total_bricks = no_of_breakable_bricks + no_of_unbreakable_bricks + no_of_exploding_bricks + no_of_rainbow_bricks
+        brick_arr = brick_arr1
+    if(l == 1):
         no_of_breakable_bricks = 20
         no_of_unbreakable_bricks = 0
         no_of_exploding_bricks = 0
         no_of_rainbow_bricks = 5
         no_of_total_bricks = no_of_breakable_bricks + no_of_unbreakable_bricks + no_of_exploding_bricks + no_of_rainbow_bricks
-        brick_arr = brick_arr1
-    if(l == 1):
-        no_of_breakable_bricks = 2
-        no_of_unbreakable_bricks = 0
-        no_of_exploding_bricks = 0
-        no_of_rainbow_bricks = 1
-        no_of_total_bricks = no_of_breakable_bricks + no_of_unbreakable_bricks + no_of_exploding_bricks + no_of_rainbow_bricks
         brick_arr = brick_arr2
 
     elif(l == 2):
         no_of_breakable_bricks = 0
-        no_of_unbreakable_bricks = 1
+        no_of_unbreakable_bricks = 5
         no_of_exploding_bricks = 0
         no_of_rainbow_bricks = 0
         no_of_total_bricks = no_of_breakable_bricks + no_of_unbreakable_bricks + no_of_exploding_bricks + no_of_rainbow_bricks
         brick_arr = brick_arr3
+        newBoss = Boss(newPaddle)
 
     while True:
         newPaddle = Paddle(7)
         newBall = Ball(newPaddle)
-        if(l == 2):
-            newBoss = Boss(newPaddle)
         ball_move = 0
         ticks = 3
         through_ball = 0
@@ -312,11 +299,13 @@ for l in range (3):
                     brick_arr[i].disp(screen)
             newPaddle.disp(screen)
             if(l == 2):
+                if(ticks%45 == 0):
+                    sounds.play_sound2()
                 newBoss.move(newPaddle)
                 newBoss.disp(screen)
                 newBall.boss_collision(screen, newBoss)
                 if(newBoss.health == 0):
-                    print("WOW BHAIYA")
+                    print("\nWOW BHAIYA")
                     system("stty echo")
                     quit()
                 if(newBoss.health == 6 and newBoss.defense1 == 0):
@@ -336,23 +325,30 @@ for l in range (3):
 
                     i = 0
 
+                if(lives == 0):
+                    print("\nGAME OVER")
+                    system("stty echo")
+                    quit()
+
                 i = 0
-                if(ticks%50 == 0):
+
+                if(ticks%100 == 0):
                     config.bombs.append(Bomb(newBoss))
                 while i < len(config.bombs):
-                    # print("jasidiasid")
-                    config.bombs[i].disp(screen)
-                    config.bombs[i].move()
                     if(config.bombs[i].hit(screen)):
                         hit = 1
                         lives -= 1
                         break
+                    config.bombs[i].move()
+                    config.bombs[i].disp(screen)
                     i += 1
+
                 
                 if(hit == 1):
                     config.bombs.clear()
                     hit = 0
                     break
+            
             
             i = 0
 
@@ -385,7 +381,7 @@ for l in range (3):
             i = 0
 
             for i in range(no_of_total_bricks):
-                if(brick_arr[i].y == 38 and brick_arr[i].strength > 0):
+                if(brick_arr[i].y == 37 and brick_arr[i].strength > 0):
                         system("stty echo")
                         quit()
 
@@ -396,7 +392,6 @@ for l in range (3):
                 if(config.falling_powerups[i].move()):
                     config.falling_powerups[i].disp(screen)
                     config.falling_powerups[i].caught(screen)
-                    # config.falling_powerups[i].collision(screen)
                     i += 1
             i = 0
             while (i < len(config.active_powerups)):
@@ -449,6 +444,10 @@ for l in range (3):
 
             if(newBall.y == rows+1):
                 lives -= 1
+                if(lives == 0):
+                    print("GAME OVER")
+                    system("stty echo")
+                    quit()
                 # next_level = 0
                 break
             # print(newBall.x_vel)
@@ -517,7 +516,13 @@ for l in range (3):
             print('\033[0K', end='')
             print("ACTIVE POWER UPS: ", power_up_print)
             if(l == 2):
-                print('Boss Health: ', newBoss.health)
+                print("BOSS HEALTH: ", end = '')
+                for i in range (9):
+                    if(i<newBoss.health):
+                        print('#', end = '')
+                    else:
+                        print(' ', end = '')
+                # print('\n')
 
             if(key == "d" or key == "a"):
                 newPaddle.move(key)
@@ -561,7 +566,7 @@ for l in range (3):
 # system("stty echo")
 # quit()    
 
-print("GAME OVER")
+print("\nGAME OVER")
 
 # except:
 system("stty echo")

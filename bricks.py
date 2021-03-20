@@ -11,6 +11,7 @@ lives = 3
 no_of_breakable_bricks = 6
 no_of_unbreakable_bricks = 2
 no_of_exploding_bricks = 4
+bullet_char = '.'
 
 
 class Brick:
@@ -35,7 +36,7 @@ class Brick:
         if (self.strength > 0):
             if(self.strength == 1):
                 rand = np.random.randint(1, 4)
-                rand = 3
+                # rand = 3
                 if(rand % 3 == 0):
                     rand2 = np.random.randint(1, 7)
                     if(rand2 == 1):
@@ -58,7 +59,7 @@ class Brick:
         self.collision(arr, Brick_arr, ball_velocities)
         if(self.strength > 0):
             rand = np.random.randint(1, 4)
-            rand = 3
+            # rand = 3
             if(rand % 3 == 0):
                 rand2 = np.random.randint(1, 7)
                 if(rand2 == 1):
@@ -84,7 +85,7 @@ class Brick:
     def explode(self, arr, Brick_arr, ball_velocities):
         if(self.strength > 0):
             rand = np.random.randint(1, 4)
-            rand = 3
+            # rand = 3
             if(rand % 3 == 0):
                 rand2 = np.random.randint(1, 7)
                 if(rand2 == 1):
@@ -107,51 +108,51 @@ class Brick:
             for j in range(brick_length):
                 arr[self.y + j][self.x + i] = ' '
 
-        if((arr[self.y-1][self.x] != ' ') and (arr[self.y-1][self.x] != ball_char)):
+        if((arr[self.y-1][self.x] != ' ') and (arr[self.y-1][self.x] != ball_char) and (arr[self.y-1][self.x] != bullet_char)):
             curr = int(arr[self.y-1][self.x])
             Brick_arr[curr].destroy(arr, Brick_arr, ball_velocities)
 
-        if((arr[self.y][self.x-1] != ' ') and (arr[self.y][self.x-1] != ball_char)):
+        if((arr[self.y][self.x-1] != ' ') and (arr[self.y][self.x-1] != ball_char) and (arr[self.y][self.x-1] != bullet_char)):
             curr = int(arr[self.y][self.x-1])
             Brick_arr[curr].destroy(arr, Brick_arr, ball_velocities)
 
-        if((arr[self.y+brick_length][self.x] != ' ') and (arr[self.y+brick_length][self.x] != ball_char)):
+        if((arr[self.y+brick_length][self.x] != ' ') and (arr[self.y+brick_length][self.x] != ball_char) and (arr[self.y+brick_length][self.x] != bullet_char)):
             curr = int(arr[self.y+brick_length][self.x])
             Brick_arr[curr].destroy(arr, Brick_arr, ball_velocities)
 
-        if((arr[self.y+brick_length-1][self.x-1] != ' ') and (arr[self.y+brick_length-1][self.x-1] != ball_char)):
+        if((arr[self.y+brick_length-1][self.x-1] != ' ') and (arr[self.y+brick_length-1][self.x-1] != ball_char) and (arr[self.y+brick_length-1][self.x-1] != bullet_char)):
             curr = int(arr[self.y+brick_length-1][self.x-1])
             Brick_arr[curr].destroy(arr, Brick_arr, ball_velocities)
 
-        if((arr[self.y][self.x+brick_length] != ' ') and (arr[self.y][self.x+brick_length] != ball_char)):
+        if((arr[self.y][self.x+brick_length] != ' ') and (arr[self.y][self.x+brick_length] != ball_char) and (arr[self.y][self.x+brick_length] != bullet_char)):
             curr = int(arr[self.y][self.x+brick_length])
             Brick_arr[curr].destroy(arr, Brick_arr, ball_velocities)
 
-        if((arr[self.y-1][self.x+brick_length-1] != ' ') and (arr[self.y-1][self.x+brick_length-1] != ball_char)):
+        if((arr[self.y-1][self.x+brick_length-1] != ' ') and (arr[self.y-1][self.x+brick_length-1] != ball_char) and (arr[self.y-1][self.x+brick_length-1] != bullet_char)):
             curr = int(arr[self.y-1][self.x+brick_length-1])
             Brick_arr[curr].destroy(arr, Brick_arr, ball_velocities)
 
-        if((arr[self.y+brick_length][self.x+brick_length-1] != ' ') and (arr[self.y+brick_length][self.x+brick_length-1] != ball_char)):
+        if((arr[self.y+brick_length][self.x+brick_length-1] != ' ') and (arr[self.y+brick_length][self.x+brick_length-1] != ball_char) and (arr[self.y+brick_length][self.x+brick_length-1] != bullet_char)):
             curr = int(arr[self.y+brick_length][self.x+brick_length-1])
             Brick_arr[curr].destroy(arr, Brick_arr, ball_velocities)
 
-        if((arr[self.y+brick_length-1][self.x+brick_length] != ' ') and (arr[self.y+brick_length-1][self.x+brick_length] != ball_char)):
+        if((arr[self.y+brick_length-1][self.x+brick_length] != ' ') and (arr[self.y+brick_length-1][self.x+brick_length] != ball_char) and (arr[self.y+brick_length-1][self.x+brick_length] != bullet_char)):
             curr = int(arr[self.y+brick_length-1][self.x+brick_length])
             Brick_arr[curr].destroy(arr, Brick_arr, ball_velocities)
 
-        if((arr[self.y-1][self.x-1] != ' ') and (arr[self.y-1][self.x-1] != ball_char)):
+        if((arr[self.y-1][self.x-1] != ' ') and (arr[self.y-1][self.x-1] != ball_char) and (arr[self.y-1][self.x-1] != bullet_char)):
             curr = int(arr[self.y-1][self.x-1])
             Brick_arr[curr].destroy(arr, Brick_arr, ball_velocities)
 
-        if((arr[self.y-1][self.x+brick_length] != ' ') and (arr[self.y-1][self.x+brick_length] != ball_char)):
+        if((arr[self.y-1][self.x+brick_length] != ' ') and (arr[self.y-1][self.x+brick_length] != ball_char) and (arr[self.y-1][self.x+brick_length] != bullet_char)):
             curr = int(arr[self.y-1][self.x+brick_length])
             Brick_arr[curr].destroy(arr, Brick_arr, ball_velocities)
 
-        if((arr[self.y+brick_length][self.x-1] != ' ') and (arr[self.y+brick_length][self.x-1] != ball_char)):
+        if((arr[self.y+brick_length][self.x-1] != ' ') and (arr[self.y+brick_length][self.x-1] != ball_char) and (arr[self.y+brick_length][self.x-1] != bullet_char)):
             curr = int(arr[self.y+brick_length][self.x-1])
             Brick_arr[curr].destroy(arr, Brick_arr, ball_velocities)
 
-        if((arr[self.y+brick_length][self.x+brick_length] != ' ') and (arr[self.y+brick_length][self.x+brick_length] != ball_char)):
+        if((arr[self.y+brick_length][self.x+brick_length] != ' ') and (arr[self.y+brick_length][self.x+brick_length] != ball_char) and (arr[self.y+brick_length][self.x+brick_length] != bullet_char)):
             curr = int(arr[self.y+brick_length][self.x+brick_length])
             Brick_arr[curr].destroy(arr, Brick_arr, ball_velocities)
 
@@ -188,7 +189,7 @@ class Rainbow(Brick):
         if (self.strength > 0):
             if(self.strength == 1):
                 rand = np.random.randint(1, 4)
-                rand = 3
+                # rand = 3
                 if(rand % 3 == 0):
                     rand2 = np.random.randint(1, 7)
                     if(rand2 == 1):
@@ -221,7 +222,7 @@ class Exploding(Brick):
     def collision(self, arr, Brick_arr, ball_velocities):
         if(self.strength > 0):
             rand = np.random.randint(1, 4)
-            rand = 3
+            # rand = 3
             if(rand % 3 == 0):
                 rand2 = np.random.randint(1, 7)
                 if(rand2 == 1):
@@ -244,51 +245,51 @@ class Exploding(Brick):
             for j in range(brick_length):
                 arr[self.y + j][self.x + i] = ' '
 
-        if((arr[self.y-1][self.x] != ' ') and (arr[self.y-1][self.x] != ball_char)):
+        if((arr[self.y-1][self.x] != ' ') and (arr[self.y-1][self.x] != ball_char) and (arr[self.y-1][self.x] != bullet_char)):
             curr = int(arr[self.y-1][self.x])
             Brick_arr[curr].destroy(arr, Brick_arr, ball_velocities)
 
-        if((arr[self.y][self.x-1] != ' ') and (arr[self.y][self.x-1] != ball_char)):
+        if((arr[self.y][self.x-1] != ' ') and (arr[self.y][self.x-1] != ball_char) and (arr[self.y][self.x-1] != bullet_char)):
             curr = int(arr[self.y][self.x-1])
             Brick_arr[curr].destroy(arr, Brick_arr, ball_velocities)
 
-        if((arr[self.y+brick_length][self.x] != ' ') and (arr[self.y+brick_length][self.x] != ball_char)):
+        if((arr[self.y+brick_length][self.x] != ' ') and (arr[self.y+brick_length][self.x] != ball_char) and (arr[self.y+brick_length][self.x] != bullet_char)):
             curr = int(arr[self.y+brick_length][self.x])
             Brick_arr[curr].destroy(arr, Brick_arr, ball_velocities)
 
-        if((arr[self.y+brick_length-1][self.x-1] != ' ') and (arr[self.y+brick_length-1][self.x-1] != ball_char)):
+        if((arr[self.y+brick_length-1][self.x-1] != ' ') and (arr[self.y+brick_length-1][self.x-1] != ball_char) and (arr[self.y+brick_length-1][self.x-1] != bullet_char)):
             curr = int(arr[self.y+brick_length-1][self.x-1])
             Brick_arr[curr].destroy(arr, Brick_arr, ball_velocities)
 
-        if((arr[self.y][self.x+brick_length] != ' ') and (arr[self.y][self.x+brick_length] != ball_char)):
+        if((arr[self.y][self.x+brick_length] != ' ') and (arr[self.y][self.x+brick_length] != ball_char) and (arr[self.y][self.x+brick_length] != bullet_char)):
             curr = int(arr[self.y][self.x+brick_length])
             Brick_arr[curr].destroy(arr, Brick_arr, ball_velocities)
 
-        if((arr[self.y-1][self.x+brick_length-1] != ' ') and (arr[self.y-1][self.x+brick_length-1] != ball_char)):
+        if((arr[self.y-1][self.x+brick_length-1] != ' ') and (arr[self.y-1][self.x+brick_length-1] != ball_char) and (arr[self.y-1][self.x+brick_length-1] != bullet_char)):
             curr = int(arr[self.y-1][self.x+brick_length-1])
             Brick_arr[curr].destroy(arr, Brick_arr, ball_velocities)
 
-        if((arr[self.y+brick_length][self.x+brick_length-1] != ' ') and (arr[self.y+brick_length][self.x+brick_length-1] != ball_char)):
+        if((arr[self.y+brick_length][self.x+brick_length-1] != ' ') and (arr[self.y+brick_length][self.x+brick_length-1] != ball_char) and (arr[self.y+brick_length][self.x+brick_length-1] != bullet_char)):
             curr = int(arr[self.y+brick_length][self.x+brick_length-1])
             Brick_arr[curr].destroy(arr, Brick_arr, ball_velocities)
 
-        if((arr[self.y+brick_length-1][self.x+brick_length] != ' ') and (arr[self.y+brick_length-1][self.x+brick_length] != ball_char)):
+        if((arr[self.y+brick_length-1][self.x+brick_length] != ' ') and (arr[self.y+brick_length-1][self.x+brick_length] != ball_char) and (arr[self.y+brick_length-1][self.x+brick_length] != bullet_char)):
             curr = int(arr[self.y+brick_length-1][self.x+brick_length])
             Brick_arr[curr].destroy(arr, Brick_arr, ball_velocities)
 
-        if((arr[self.y-1][self.x-1] != ' ') and (arr[self.y-1][self.x-1] != ball_char)):
+        if((arr[self.y-1][self.x-1] != ' ') and (arr[self.y-1][self.x-1] != ball_char) and (arr[self.y-1][self.x-1] != bullet_char)):
             curr = int(arr[self.y-1][self.x-1])
             Brick_arr[curr].destroy(arr, Brick_arr, ball_velocities)
 
-        if((arr[self.y-1][self.x+brick_length] != ' ') and (arr[self.y-1][self.x+brick_length] != ball_char)):
+        if((arr[self.y-1][self.x+brick_length] != ' ') and (arr[self.y-1][self.x+brick_length] != ball_char) and (arr[self.y-1][self.x+brick_length] != bullet_char)):
             curr = int(arr[self.y-1][self.x+brick_length])
             Brick_arr[curr].destroy(arr, Brick_arr, ball_velocities)
 
-        if((arr[self.y+brick_length][self.x-1] != ' ') and (arr[self.y+brick_length][self.x-1] != ball_char)):
+        if((arr[self.y+brick_length][self.x-1] != ' ') and (arr[self.y+brick_length][self.x-1] != ball_char) and (arr[self.y+brick_length][self.x-1] != bullet_char)):
             curr = int(arr[self.y+brick_length][self.x-1])
             Brick_arr[curr].destroy(arr, Brick_arr, ball_velocities)
 
-        if((arr[self.y+brick_length][self.x+brick_length] != ' ') and (arr[self.y+brick_length][self.x+brick_length] != ball_char)):
+        if((arr[self.y+brick_length][self.x+brick_length] != ' ') and (arr[self.y+brick_length][self.x+brick_length] != ball_char) and (arr[self.y+brick_length][self.x+brick_length] != bullet_char)):
             curr = int(arr[self.y+brick_length][self.x+brick_length])
             Brick_arr[curr].destroy(arr, Brick_arr, ball_velocities)
 

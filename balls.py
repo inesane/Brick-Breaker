@@ -167,15 +167,15 @@ class Ball:
             curr = int(arr[self.y][self.x+1])
             Brick_arr[curr].destroy(arr, Brick_arr, ball_velocities)
         
-        elif((arr[self.y][self.x-1] != ' ') and (arr[self.y][self.x-1] != paddle_char) and (arr[self.y][self.x-1] != left_border) and (arr[self.y][self.x-1] != right_border) and (arr[self.y][self.x-1] != bottom_border) and (arr[self.y][self.x-1] != top_border) and (arr[self.y][self.x-1] != boss_char) and (self.x_vel < 0)):
+        elif((arr[self.y][self.x-1] != ' ') and (arr[self.y][self.x-1] != paddle_char) and (arr[self.y][self.x-1] != left_border) and (arr[self.y][self.x-1] != right_border) and (arr[self.y][self.x-1] != bottom_border) and (arr[self.y][self.x-1] != top_border) and (arr[self.y][self.x-1] != boss_char) and (arr[self.y][self.x-1] != bomb_char) and (self.x_vel < 0)):
             curr = int(arr[self.y][self.x-1])
             Brick_arr[curr].destroy(arr, Brick_arr, ball_velocities)
         
-        elif((arr[self.y+1][self.x] != ' ') and (arr[self.y+1][self.x] != paddle_char) and (arr[self.y+1][self.x] != left_border) and (arr[self.y+1][self.x] != right_border) and (arr[self.y+1][self.x] != bottom_border) and (arr[self.y+1][self.x] != top_border) and (arr[self.y+1][self.x] != boss_char) and (self.y_vel < 0)):
+        elif((arr[self.y+1][self.x] != ' ') and (arr[self.y+1][self.x] != paddle_char) and (arr[self.y+1][self.x] != left_border) and (arr[self.y+1][self.x] != right_border) and (arr[self.y+1][self.x] != bottom_border) and (arr[self.y+1][self.x] != top_border) and (arr[self.y+1][self.x] != boss_char) and (arr[self.y+1][self.x] != bomb_char) and (self.y_vel < 0)):
             curr = int(arr[self.y+1][self.x])
             Brick_arr[curr].destroy(arr, Brick_arr, ball_velocities)
         
-        elif((arr[self.y-1][self.x] != ' ') and (arr[self.y-1][self.x] != paddle_char) and (arr[self.y-1][self.x] != left_border) and (arr[self.y-1][self.x] != right_border) and (arr[self.y-1][self.x] != bottom_border) and (arr[self.y-1][self.x] != top_border) and (arr[self.y-1][self.x] != boss_char) and (self.y_vel > 0)):
+        elif((arr[self.y-1][self.x] != ' ') and (arr[self.y-1][self.x] != paddle_char) and (arr[self.y-1][self.x] != left_border) and (arr[self.y-1][self.x] != right_border) and (arr[self.y-1][self.x] != bottom_border) and (arr[self.y-1][self.x] != top_border) and (arr[self.y-1][self.x] != boss_char) and (arr[self.y-1][self.x] != bomb_char) and (self.y_vel > 0)):
             curr = int(arr[self.y-1][self.x])
             Brick_arr[curr].destroy(arr, Brick_arr, ball_velocities)
         
