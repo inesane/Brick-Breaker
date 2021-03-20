@@ -5,9 +5,11 @@ import numpy as np
 from time import sleep
 from colorama import Back, Fore, Style
 from paddles import Paddle
-from bricks import Unbreakable, Breakable, Exploding, Rainbow
+from bricks import Unbreakable, Breakable, Exploding, Rainbow, BossBrick
 from balls import Ball
 from bullets import Bullet
+from boss import Boss
+from bombs import Bomb
 import time
 import config
 import sounds
@@ -148,9 +150,11 @@ next_level = 0
 # brick_arr[42].x = 40
 # brick_arr[42].y = 20
 
-brick_arr1 = [0]*(20)
+brick_arr1 = [0]*(25)
 for i in range(20):
     brick_arr1[i] = Breakable(str(i))
+for i in range(5):
+    brick_arr1[i+20] = Rainbow(str(i+20))
 
 brick_arr1[0].x = 5
 brick_arr1[0].y = 5
@@ -192,6 +196,16 @@ brick_arr1[18].x = 50
 brick_arr1[18].y = 29
 brick_arr1[19].x = 54
 brick_arr1[19].y = 29
+brick_arr1[20].x = 70
+brick_arr1[20].y = 10
+brick_arr1[21].x = 70
+brick_arr1[21].y = 16
+brick_arr1[22].x = 70
+brick_arr1[22].y = 22
+brick_arr1[23].x = 70
+brick_arr1[23].y = 4
+brick_arr1[24].x = 70
+brick_arr1[24].y = 29
 
 brick_arr2 = [0]*(3)
 for i in range(2):
@@ -205,31 +219,33 @@ brick_arr2[1].y = 25
 brick_arr2[2].x = 50
 brick_arr2[2].y = 20
 
-brick_arr3 = [0]*(4)
-for i in range(4):
+brick_arr3 = [0]*(1)
+for i in range(1):
     brick_arr3[i] = Unbreakable(str(i))
 brick_arr3[0].x = 5
-brick_arr3[0].y = 5
-brick_arr3[1].x = 10
-brick_arr3[1].y = 10
-brick_arr3[2].x = 20
-brick_arr3[2].y = 20
-brick_arr3[3].x = 50
-brick_arr3[3].y = 20
+brick_arr3[0].y = 20
+# brick_arr3[1].x = 10
+# brick_arr3[1].y = 10
+# brick_arr3[2].x = 20
+# brick_arr3[2].y = 20
+# brick_arr3[3].x = 50
+# brick_arr3[3].y = 20
 
 # change brick ball collision to make sesk
 # get code out of main? move shit to config?
 # paddle ball overlapping sometimes after wall collision
 # multiple through ball powerups simultaneously once first ends second stops working (through_ball var)
-# fix powerup gravity (direction and if powerup too high)
+# random errors with rainbow
+# base 10 bs balls.py curr(int) brick coll
 
 for l in range (3):
+    config.bullets.clear()
     brick_arr = []
     if(l == 0):
         no_of_breakable_bricks = 20
         no_of_unbreakable_bricks = 0
         no_of_exploding_bricks = 0
-        no_of_rainbow_bricks = 0
+        no_of_rainbow_bricks = 5
         no_of_total_bricks = no_of_breakable_bricks + no_of_unbreakable_bricks + no_of_exploding_bricks + no_of_rainbow_bricks
         brick_arr = brick_arr1
     if(l == 1):
@@ -242,7 +258,7 @@ for l in range (3):
 
     elif(l == 2):
         no_of_breakable_bricks = 0
-        no_of_unbreakable_bricks = 4
+        no_of_unbreakable_bricks = 1
         no_of_exploding_bricks = 0
         no_of_rainbow_bricks = 0
         no_of_total_bricks = no_of_breakable_bricks + no_of_unbreakable_bricks + no_of_exploding_bricks + no_of_rainbow_bricks
@@ -251,12 +267,16 @@ for l in range (3):
     while True:
         newPaddle = Paddle(7)
         newBall = Ball(newPaddle)
+        if(l == 2):
+            newBoss = Boss(newPaddle)
         ball_move = 0
         ticks = 3
         through_ball = 0
         starting_life_time = time.time()
         current_life_time = 0
-        paddle_shooter = 0
+        config.paddle_shooter = 0
+        config.bullets.clear()
+        hit = 0
         if(next_level == 1):
             next_level = 0
             break
@@ -291,6 +311,51 @@ for l in range (3):
                 if(brick_arr[i].strength>0):
                     brick_arr[i].disp(screen)
             newPaddle.disp(screen)
+            if(l == 2):
+                newBoss.move(newPaddle)
+                newBoss.disp(screen)
+                newBall.boss_collision(screen, newBoss)
+                if(newBoss.health == 0):
+                    print("WOW BHAIYA")
+                    system("stty echo")
+                    quit()
+                if(newBoss.health == 6 and newBoss.defense1 == 0):
+                    newBoss.defense1 = 1
+                    for i in range(19):
+                        brick_arr.append(BossBrick(str(no_of_total_bricks + i)))
+                        brick_arr[no_of_total_bricks+i].y = 10
+                        brick_arr[no_of_total_bricks+i].x = 4*i + 4
+                    no_of_total_bricks+=19
+                if(newBoss.health == 3 and newBoss.defense2 == 0):
+                    newBoss.defense2 = 1
+                    for i in range(19):
+                        brick_arr.append(BossBrick(str(no_of_total_bricks + i)))
+                        brick_arr[no_of_total_bricks+i].y = 5
+                        brick_arr[no_of_total_bricks+i].x = 4*i + 4
+                    no_of_total_bricks+=19
+
+                    i = 0
+
+                i = 0
+                if(ticks%50 == 0):
+                    config.bombs.append(Bomb(newBoss))
+                while i < len(config.bombs):
+                    # print("jasidiasid")
+                    config.bombs[i].disp(screen)
+                    config.bombs[i].move()
+                    if(config.bombs[i].hit(screen)):
+                        hit = 1
+                        lives -= 1
+                        break
+                    i += 1
+                
+                if(hit == 1):
+                    config.bombs.clear()
+                    hit = 0
+                    break
+            
+            i = 0
+
 
             if(ball_move == 1):
                 newBall.paddle_collison(screen, newPaddle, round(current_life_time - starting_life_time), brick_arr, no_of_total_bricks, ticks)
@@ -306,15 +371,15 @@ for l in range (3):
             
             i = 0
 
-            if(paddle_shooter == 1):
+            if(config.paddle_shooter == 1):
                 if(ticks%15 == 0):
                     sounds.play_sound()
                     config.bullets.append(Bullet(newPaddle.x))
                     config.bullets.append(Bullet(newPaddle.x + newPaddle.length))
                 while (i < len(config.bullets)):
                     config.bullets[i].move()
-                    config.bullets[i].collision(screen, brick_arr)
                     config.bullets[i].disp(screen)
+                    config.bullets[i].collision(screen, brick_arr)
                     i += 1
 
             i = 0
@@ -352,7 +417,7 @@ for l in range (3):
                     if(config.active_powerups[i].which == 5):
                         through_ball = 0
                     if(config.active_powerups[i].which == 6):
-                        paddle_shooter = 0
+                        config.paddle_shooter = 0
                         config.bullets.clear()
                     config.active_powerups.remove(config.active_powerups[i])
                     i -= 1
@@ -377,7 +442,7 @@ for l in range (3):
                         through_ball = 1
                         config.active_powerups[i].active = 1
                     if(config.active_powerups[i].which == 6 and config.active_powerups[i].active == 0):
-                        paddle_shooter = 1
+                        config.paddle_shooter = 1
                         config.active_powerups[i].active = 1
                 i += 1
             newBall.disp(screen)
@@ -411,20 +476,26 @@ for l in range (3):
                                 print(' ', end="")
                                 print(Style.RESET_ALL, end="")
                             elif(brick_arr[curr].strength == 3):
-                                print(Fore.RED + Back.RED, end="")
+                                print(Fore.WHITE + Back.RED, end="")
                                 print(' ', end="")
                                 print(Style.RESET_ALL, end="")
                             elif(brick_arr[curr].strength == 2):
-                                print(Fore.YELLOW + Back.YELLOW, end="")
+                                print(Fore.WHITE + Back.YELLOW, end="")
                                 print(' ', end="")
                                 print(Style.RESET_ALL, end="")
                             elif(brick_arr[curr].strength == 1):
-                                print(Fore.GREEN + Back.GREEN, end="")
+                                print(Fore.WHITE + Back.GREEN, end="")
                                 print(' ', end="")
                                 print(Style.RESET_ALL, end="")
 
                     else:
-                        print(j, end="")
+                        if(config.paddle_shooter == 1 and j == paddle_char):
+                            print(Fore.MAGENTA + Back.MAGENTA, end="")
+                            print(j, end="")
+                            print(Style.RESET_ALL, end="")
+                        else:
+                            print(j, end="")
+
 
             print("LIVES: ", lives)
             print("TIME:  ", round(time_played - initial_time))
@@ -436,7 +507,7 @@ for l in range (3):
                 if(config.active_powerups[i].which == 2):
                     power_up_print += "sp  "
                 if(config.active_powerups[i].which == 3):
-                    power_up_print += "bm  "
+                    power_up_print += "fi  "
                 if(config.active_powerups[i].which == 4):
                     power_up_print += "fb  "
                 if(config.active_powerups[i].which == 5):
@@ -445,6 +516,8 @@ for l in range (3):
                     power_up_print += "sh  "
             print('\033[0K', end='')
             print("ACTIVE POWER UPS: ", power_up_print)
+            if(l == 2):
+                print('Boss Health: ', newBoss.health)
 
             if(key == "d" or key == "a"):
                 newPaddle.move(key)
@@ -482,6 +555,7 @@ for l in range (3):
         config.no_of_active_powerups = 0
         config.active_powerups.clear()
         config.falling_powerups.clear()
+        config.bombs.clear()
 
 # print("WOW BHAIYA")
 # system("stty echo")

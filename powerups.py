@@ -30,10 +30,11 @@ class PowerUp:
         self.moved = 3
 
     def move(self):
-        if((self.y_vel_init < 0) and (self.moved > 0)):
+        # print(self.y_vel_init)
+        if((self.y_vel_init > 0) and (self.moved > 0)):
             self.ticks += 1
             if(self.ticks % 4 == 0):
-                self.y += self.y_vel_init
+                self.y -= self.y_vel_init
                 self.x += self.x_vel
                 self.moved -= 1
             return True
@@ -57,27 +58,6 @@ class PowerUp:
             if(self.y >= rows):
                 config.falling_powerups.remove(self)
                 return False
-        # self.ticks+=1
-        # if(self.ticks % 4 == 0):
-        #     self.y += self.y_vel_init
-        #     self.x += self.x_vel
-        #     self.y_vel_init += 1
-        # if(self.x <= 2 and self.x_vel < 0):
-        #     self.x_vel = -1*self.x_vel
-        #     self.x = 2
-        # if(self.x >= columns - 1 and self.x_vel > 0):
-        #     self.x_vel = -1*self.x_vel
-        #     self.x = columns - 1
-        # if(self.y < 2 and self.y_vel_init < 0):
-        #     self.y = 1
-        #     self.y_vel_init *= -1
-
-        # if(self.y < rows):
-        #     return True
-        # if(self.y >= rows):
-        #     config.falling_powerups.remove(self)
-        #     return False
-
     
     def caught(self, arr):
         if(arr[self.y+1][self.x] == paddle_char or arr[self.y+1][self.x+1] == paddle_char):
@@ -98,7 +78,9 @@ class ExpandPaddle(PowerUp):
             self.x = 2
         elif(self.x > columns - 1 and self.x_vel > 0):
             self.x = columns - 1
-        # if(self.y )
+        if(self.y < 2 and self.y_vel < 0):
+            self.y = 1
+            self.y_vel = 1
         arr[self.y][self.x] = 'e'
         arr[self.y][self.x+1] = 'p'
 
@@ -131,6 +113,9 @@ class FireBall(PowerUp):
             self.x = 2
         elif(self.x > columns - 1 and self.x_vel > 0):
             self.x = columns - 1
+        if(self.y < 2 and self.y_vel < 0):
+            self.y = 1
+            self.y_vel = 1
         arr[self.y][self.x] = 'f'
         arr[self.y][self.x+1] = 'i'
 
@@ -147,6 +132,9 @@ class FastBall(PowerUp):
             self.x = 2
         elif(self.x > columns - 1 and self.x_vel > 0):
             self.x = columns - 1
+        if(self.y < 2 and self.y_vel < 0):
+            self.y = 1
+            self.y_vel = 1
         arr[self.y][self.x] = 'f'
         arr[self.y][self.x+1] = 'b'
 
@@ -163,6 +151,9 @@ class ThroughBall(PowerUp):
             self.x = 2
         elif(self.x > columns - 1 and self.x_vel > 0):
             self.x = columns - 1
+        if(self.y < 2 and self.y_vel < 0):
+            self.y = 1
+            self.y_vel = 1
         arr[self.y][self.x] = 't'
         arr[self.y][self.x+1] = 'b'
 
@@ -179,5 +170,8 @@ class ShootingPaddle(PowerUp):
             self.x = 2
         elif(self.x > columns - 1 and self.x_vel > 0):
             self.x = columns - 1
+        if(self.y < 2 and self.y_vel < 0):
+            self.y = 1
+            self.y_vel = 1
         arr[self.y][self.x] = 's'
         arr[self.y][self.x+1] = 'h'

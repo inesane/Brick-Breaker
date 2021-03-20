@@ -18,6 +18,7 @@ top_border = '_'
 brick_length = 4
 no_of_bricks = 5
 lives = 3
+boss_char = '+'
 
 class Bullet:
     def __init__(self,x):

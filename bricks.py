@@ -69,7 +69,6 @@ class Brick:
                         ShrinkPaddle(self.x, self.y, ball_velocities))
                 if(rand2 == 3):
                     config.falling_powerups.append(FireBall(self.x, self.y, ball_velocities))
-                    # config.falling_powerups.append(ShootingPaddle(self.x, self.y, ball_velocities))
                 if(rand2 == 4):
                     config.falling_powerups.append(FastBall(self.x, self.y, ball_velocities))
                 if(rand2 == 5):
@@ -95,7 +94,6 @@ class Brick:
                     config.falling_powerups.append(
                         ShrinkPaddle(self.x, self.y, ball_velocities))
                 if(rand2 == 3):
-                    # config.falling_powerups.append(ShootingPaddle(self.x, self.y, ball_velocities))
                     config.falling_powerups.append(FireBall(self.x, self.y, ball_velocities))
                 if(rand2 == 4):
                     config.falling_powerups.append(FastBall(self.x, self.y, ball_velocities))
@@ -200,7 +198,6 @@ class Rainbow(Brick):
                         config.falling_powerups.append(
                             ShrinkPaddle(self.x, self.y, ball_velocities))
                     if(rand2 == 3):
-                        # config.falling_powerups.append(ShootingPaddle(self.x, self.y, ball_velocities))
                         config.falling_powerups.append(FireBall(self.x, self.y, ball_velocities))
                     if(rand2 == 4):
                         config.falling_powerups.append(
@@ -234,7 +231,6 @@ class Exploding(Brick):
                     config.falling_powerups.append(
                         ShrinkPaddle(self.x, self.y, ball_velocities))
                 if(rand2 == 3):
-                    # config.falling_powerups.append(ShootingPaddle(self.x, self.y, ball_velocities))
                     config.falling_powerups.append(FireBall(self.x, self.y, ball_velocities))
                 if(rand2 == 4):
                     config.falling_powerups.append(FastBall(self.x, self.y, ball_velocities))
@@ -295,3 +291,16 @@ class Exploding(Brick):
         if((arr[self.y+brick_length][self.x+brick_length] != ' ') and (arr[self.y+brick_length][self.x+brick_length] != ball_char)):
             curr = int(arr[self.y+brick_length][self.x+brick_length])
             Brick_arr[curr].destroy(arr, Brick_arr, ball_velocities)
+
+class BossBrick(Brick):
+    pass
+
+    def __init__(self, index):
+        self.strength = np.random.randint(1, 4)
+        super().__init__(index)
+    
+    def collision(self, arr, Brick_arr, ball_velocities):
+        if (self.strength > 0):
+            if(self.strength == 1):
+                config.score += 10
+            self.strength -= 1
