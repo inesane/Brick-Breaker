@@ -1,6 +1,4 @@
-# Brick-Breaker
-
-## Terminal Based Brick Breaker Game
+# Terminal Based Brick Breaker Game
 
 ## To Run:
 
